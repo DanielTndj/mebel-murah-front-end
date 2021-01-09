@@ -2,12 +2,12 @@ import firebase from "firebase/app";
 import "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAFkK_PQGYhziHBKaORVHoXb_C0k7E_LQg",
-  authDomain: "ecommerce-ba87c.firebaseapp.com",
-  projectId: "ecommerce-ba87c",
-  storageBucket: "ecommerce-ba87c.appspot.com",
-  messagingSenderId: "681070230009",
-  appId: "1:681070230009:web:92bdb1ee62ac8683512528",
+  apiKey: "AIzaSyCGlwQNTHjMM6Qgl-1hD5U9Yjyzs4nxybU",
+  authDomain: "mebel-murah-ecommerce.firebaseapp.com",
+  projectId: "mebel-murah-ecommerce",
+  storageBucket: "mebel-murah-ecommerce.appspot.com",
+  messagingSenderId: "926842887635",
+  appId: "1:926842887635:web:ffd0343bb0dab953bb2326",
 };
 
 if (!firebase.apps.length) {
