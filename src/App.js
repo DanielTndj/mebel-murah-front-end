@@ -9,9 +9,12 @@ import Register from "./pages/auth/Register";
 import Header from "./components/nav/Header";
 import RegisterComplete from "./pages/auth/RegisterComplete";
 import ForgotPassword from "./pages/auth/ForgotPassword";
+import History from "./pages/user/History";
+import UserRoute from "./components/routes/UserRoute";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
+import { currentUser } from "./functions/auth";
 
 const App = () => {
   let dispatch = useDispatch();
@@ -21,16 +24,22 @@ const App = () => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       if (user) {
         const idTokenResult = await user.getIdTokenResult();
-        // console.log("user", user);
+        try {
+          const { data } = await currentUser(idTokenResult.token);
 
-        // update redux state
-        dispatch({
-          type: "LOGGED_IN_USER",
-          payload: {
-            email: user.email,
-            token: idTokenResult.token,
-          },
-        });
+          dispatch({
+            type: "LOGGED_IN_USER",
+            payload: {
+              name: data.name,
+              email: data.email,
+              token: idTokenResult.token,
+              role: data.role,
+              _id: data._id,
+            },
+          });
+        } catch (error) {
+          console.log("Error: ", error.message);
+        }
       }
     });
 
@@ -47,6 +56,7 @@ const App = () => {
         <Route exact path="/register" component={Register} />
         <Route exact path="/register/complete" component={RegisterComplete} />
         <Route exact path="/forgot/password" component={ForgotPassword} />
+        <UserRoute exact path="/user/history" component={History} />
       </Switch>
     </>
   );
