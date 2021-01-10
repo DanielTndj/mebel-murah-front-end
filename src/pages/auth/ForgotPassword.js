@@ -15,14 +15,14 @@ const ForgotPassword = ({ history }) => {
 
   useEffect(() => {
     if (user && user.token) history.push("/");
-  }, [user]);
+  }, [user, history]);
 
   const handleForgotPassword = async (event) => {
     event.preventDefault();
 
     if (!email) {
       toast.error("Email is required");
-      
+
       return;
     }
 

@@ -1,10 +1,10 @@
-import React, { useEffect } from "react";
-import { Route, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import LoadingToRedirect from "./LoadingToRedirect";
 import { currentAdmin } from "../../functions/auth";
 
-const AdminRoute = ({ children, ...rest }) => {
+const AdminRoute = ({ ...rest }) => {
   const { user } = useSelector((state) => ({ ...state }));
   const [ok, setOk] = useState(false);
 
@@ -23,11 +23,7 @@ const AdminRoute = ({ children, ...rest }) => {
     // return () => {};
   }, [user]);
 
-  return ok ? (
-    <Route {...rest} render={() => children} />
-  ) : (
-    <LoadingToRedirect />
-  );
+  return ok ? <Route {...rest} /> : <LoadingToRedirect />;
 };
 
 export default AdminRoute;

@@ -13,10 +13,13 @@ import History from "./pages/user/History";
 import Password from "./pages/user/Password";
 import Wishlist from "./pages/user/Wishlist";
 import UserRoute from "./components/routes/UserRoute";
+import AdminRoute from "./components/routes/AdminRoute";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
+
 
 const App = () => {
   let dispatch = useDispatch();
@@ -46,7 +49,7 @@ const App = () => {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [dispatch]);
 
   return (
     <>
@@ -61,6 +64,7 @@ const App = () => {
         <UserRoute exact path="/user/history" component={History} />
         <UserRoute exact path="/user/password" component={Password} />
         <UserRoute exact path="/user/wishlist" component={Wishlist} />
+        <AdminRoute exact path="/admin/dashboard" component={AdminDashboard} />
       </Switch>
     </>
   );

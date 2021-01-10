@@ -17,7 +17,7 @@ const RegisterComplete = ({ history }) => {
       return;
     }
     setEmail(window.localStorage.getItem("emailRegistration"));
-  }, [user]);
+  }, [user, history]);
 
   const sendEmailRegistration = async (event) => {
     event.preventDefault();
