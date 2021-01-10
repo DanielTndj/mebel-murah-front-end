@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { auth, googleAuthProvider } from "../../firebase";
 import { toast } from "react-toastify";
 import { Button } from "antd";
+import Spinner from "../../components/spinner/Spinner";
 import { MailOutlined, GoogleOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Spinner from "../../components/spinner/Spinner";
 import { createOrUpdateUser } from "../../functions/auth";
 
 const Login = ({ history }) => {
@@ -50,7 +50,6 @@ const Login = ({ history }) => {
             _id: data._id,
           },
         });
-
         roleBasedRedirect(data.role);
       } catch (error) {
         console.log("Error: ", error.message);
@@ -100,6 +99,7 @@ const Login = ({ history }) => {
             className="form-control"
             id="email"
             value={email}
+            disabled={loading}
             onChange={(event) => setEmail(event.target.value)}
             autoFocus
           />
@@ -111,6 +111,7 @@ const Login = ({ history }) => {
             className="form-control"
             id="password"
             value={password}
+            disabled={loading}
             onChange={(event) => setPassword(event.target.value)}
           />
         </div>
