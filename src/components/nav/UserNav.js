@@ -1,29 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Menu } from "antd";
-import { HistoryOutlined, HeartOutlined, KeyOutlined } from "@ant-design/icons";
+import { Menu, Button } from "antd";
+import {
+  HistoryOutlined,
+  HeartOutlined,
+  LockOutlined,
+  MenuUnfoldOutlined,
+  MenuFoldOutlined,
+} from "@ant-design/icons";
 
 const { Item } = Menu;
 
-const UserNav = () => {
+const UserNav = ({ selectedKeys }) => {
   const [curr, setCurr] = useState("history");
-  const handleMenu = (event) => {
-    console.log(event.key);
-    setCurr(event.key);
+  const [collapsed, setCollapsed] = useState(false);
+
+  useEffect(() => {
+    setCurr(selectedKeys);
+  }, [curr]);
+
+  const toggleCollapsed = () => {
+    setCollapsed((collapsed) => !collapsed);
   };
 
   return (
-    <Menu onClick={handleMenu} selectedKeys={[curr]} mode="inline">
-      <Item key="history" icon={<HistoryOutlined />}>
-        <Link to="/user/history">History</Link>
-      </Item>
-      <Item key="password" icon={<KeyOutlined />}>
-        <Link to="/user/password">Password</Link>
-      </Item>
-      <Item key="wishlist" icon={<HeartOutlined />}>
-        <Link to="/user/wishlist">Wishlist</Link>
-      </Item>
-    </Menu>
+    <div>
+      <Button
+        type="primary"
+        onClick={toggleCollapsed}
+        style={{ marginBottom: 16, marginTop: 16 }}
+      >
+        {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined)}
+      </Button>
+      <Menu selectedKeys={[curr]} mode="inline" inlineCollapsed={collapsed}>
+        <Item key="history" icon={<HistoryOutlined />}>
+          <Link to="/user/history">History</Link>
+        </Item>
+        <Item key="password" icon={<LockOutlined />}>
+          <Link to="/user/password">Password</Link>
+        </Item>
+        <Item key="wishlist" icon={<HeartOutlined />}>
+          <Link to="/user/wishlist">Wishlist</Link>
+        </Item>
+      </Menu>
+    </div>
   );
 };
 
