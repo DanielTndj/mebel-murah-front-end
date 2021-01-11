@@ -38,7 +38,7 @@ const Password = () => {
 
   const passwordUpdateForm = () => {
     return (
-      <form onSubmit={changePassword} className="p-3">
+      <form onSubmit={changePassword}>
         <div className="form-group">
           <label htmlFor="password">Enter new password</label>
           <input
@@ -60,7 +60,6 @@ const Password = () => {
             block
             shape="round"
             size="large"
-            disabled={!password || password.length < 8}
           >
             Change Password
           </Button>
@@ -71,14 +70,8 @@ const Password = () => {
 
   return (
     <div className="row">
-      <div className="col-md-2">
-        <UserNav />
-      </div>
-      <div className="col-md-10">
-        <div className="row justify-content-center">
-          <div className="col-md-6">{passwordUpdateForm()}</div>
-        </div>
-      </div>
+      <UserNav selectedKeys="password" />
+      <div className="m-5">{passwordUpdateForm()}</div>
     </div>
   );
 };

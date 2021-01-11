@@ -4,10 +4,8 @@ import UserNav from "../../components/nav/UserNav";
 const Wishlist = () => {
   return (
     <div className="row">
-      <div className="col-md-2">
-        <UserNav />
-      </div>
-      <div className="col">User Wishlist Page</div>
+      <UserNav selectedKeys="wishlist" />
+      <div className="m-5">Wishlist page</div>
     </div>
   );
 };
