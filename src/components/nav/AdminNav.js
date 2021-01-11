@@ -15,7 +15,7 @@ import {
 const { Item } = Menu;
 
 const AdminNav = ({ selectedKeys }) => {
-  const [curr, setCurr] = useState("dashboard");
+  const [curr, setCurr] = useState("");
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
