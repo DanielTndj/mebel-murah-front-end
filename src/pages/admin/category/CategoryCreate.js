@@ -11,6 +11,7 @@ import { List, Divider, Button, Tooltip, Popconfirm } from "antd";
 import Spinner from "../../../components/spinner/Spinner";
 import { Link } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import CategoryForm from "../../../components/forms/CategoryForm";
 
 const CategoryCreate = () => {
   const [category, setCategory] = useState("");
@@ -72,44 +73,21 @@ const CategoryCreate = () => {
       });
   };
 
-  const categoryForm = () => {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="category">Enter new category</label>
-          <input
-            type="category"
-            className="form-control"
-            id="category"
-            value={category}
-            onChange={(event) => setCategory(event.target.value)}
-            disabled={loading}
-            autoFocus
-          />
-        </div>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Button
-            onClick={handleSubmit}
-            type="primary"
-            block
-            shape="round"
-            size="large"
-          >
-            Add Category
-          </Button>
-        )}
-      </form>
-    );
-  };
-
   return (
     <div className="row">
       <AdminNav selectedKeys="category" />
       <div className="m-5 col">
         <div className="row">
-          <div className="col-md-4">{categoryForm()}</div>
+          <div className="col-md-4">
+            <CategoryForm
+              handleSubmit={handleSubmit}
+              category={category}
+              setCategory={setCategory}
+              text="Create"
+              label="New Category"
+              isLoading={loading}
+            />
+          </div>
         </div>
         <div className="row">
           <div className="col-md-12">

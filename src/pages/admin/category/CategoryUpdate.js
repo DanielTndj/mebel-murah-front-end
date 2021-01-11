@@ -11,10 +11,10 @@ import {
 } from "../../../functions/category";
 import { Button } from "antd";
 import Spinner from "../../../components/spinner/Spinner";
+import CategoryForm from "../../../components/forms/CategoryForm";
 
 const CategoryUpdate = ({ history, match }) => {
   const [category, setCategory] = useState("");
-  const [newCategory, setNewCategory] = useState("");
   const [loading, setLoading] = useState("");
   const { user } = useSelector((state) => ({ ...state }));
   const { slug } = match.params;
@@ -31,12 +31,12 @@ const CategoryUpdate = ({ history, match }) => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!newCategory) {
+    if (!category) {
       toast.error("Category is required");
       return;
     }
 
-    if (newCategory.length < 2) {
+    if (category.length < 2) {
       toast.error("Category must be at least 2 characters long");
       return;
     }
@@ -44,7 +44,7 @@ const CategoryUpdate = ({ history, match }) => {
     setLoading(true);
     try {
       const { data } = await updateCategory(user.token, slug, {
-        name: newCategory,
+        name: category,
       });
       setLoading(false);
       setCategory("");
@@ -58,54 +58,21 @@ const CategoryUpdate = ({ history, match }) => {
     }
   };
 
-  const categoryForm = () => {
-    return (
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="oldCategory">Old Category</label>
-          <input
-            type="text"
-            className="form-control"
-            id="oldCategory"
-            value={category}
-            disabled
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="newCategory">New Category</label>
-          <input
-            type="text"
-            className="form-control"
-            id="newCategory"
-            value={newCategory}
-            onChange={(event) => setNewCategory(event.target.value)}
-            disabled={loading}
-            autoFocus
-          />
-        </div>
-        {loading ? (
-          <Spinner />
-        ) : (
-          <Button
-            onClick={handleSubmit}
-            type="primary"
-            block
-            shape="round"
-            size="large"
-          >
-            Update Category
-          </Button>
-        )}
-      </form>
-    );
-  };
-
   return (
     <div className="row">
       <AdminNav selectedKeys="category" />
       <div className="m-5 col">
         <div className="row">
-          <div className="col-md-4">{categoryForm()}</div>
+          <div className="col-md-4">
+            <CategoryForm
+              handleSubmit={handleSubmit}
+              category={category}
+              setCategory={setCategory}
+              text="Submit"
+              label="Update Category"
+              isLoading={loading}
+            />
+          </div>
         </div>
       </div>
     </div>
