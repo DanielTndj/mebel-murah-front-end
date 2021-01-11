@@ -7,16 +7,17 @@ import {
   getCategories,
   removeCategory,
 } from "../../../functions/category";
-import { List, Divider, Button, Tooltip, Popconfirm } from "antd";
-import Spinner from "../../../components/spinner/Spinner";
+import { List, Divider, Tooltip, Popconfirm, Input } from "antd";
 import { Link } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import CategoryForm from "../../../components/forms/CategoryForm";
+import LocalSearch from "../../../components/forms/LocalSearch";
 
 const CategoryCreate = () => {
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState("");
+  const [keyword, setKeyword] = useState("");
   const { user } = useSelector((state) => ({ ...state }));
   const { Item } = List;
 
@@ -73,6 +74,9 @@ const CategoryCreate = () => {
       });
   };
 
+  const searched = (keyword) => (category) =>
+    category.name.toLowerCase().includes(keyword);
+
   return (
     <div className="row">
       <AdminNav selectedKeys="category" />
@@ -92,35 +96,35 @@ const CategoryCreate = () => {
         <div className="row">
           <div className="col-md-12">
             <Divider orientation="center">Categories</Divider>
-            <List
-              itemLayout="horizontal"
-              bordered
-              dataSource={categories}
-              renderItem={(item) => (
-                <Item
-                  actions={[
-                    <Tooltip title="Edit category" placement="bottomRight">
-                      <Link to={`/admin/category/${item.slug}`}>
-                        <EditOutlined className="text-secondary" />
-                      </Link>
-                    </Tooltip>,
-                    <Popconfirm
-                      title="Are you sure to delete this category"
-                      onConfirm={() => deleteCategory(item.slug)}
-                      onCancel={() => console.log("cancelled")}
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <Tooltip title="Delete category" placement="bottomRight">
-                        <DeleteOutlined className="text-danger" />
-                      </Tooltip>
-                    </Popconfirm>,
-                  ]}
-                >
-                  {item.name}
-                </Item>
-              )}
-            />
+          </div>
+        </div>
+        <LocalSearch keyword={keyword} setKeyword={setKeyword}/>
+        <div className="row">
+          <div className="col-md-12">
+            {categories.filter(searched(keyword)).map((item) => (
+              <Item
+                actions={[
+                  <Tooltip title="Edit category" placement="bottomRight">
+                    <Link to={`/admin/category/${item.slug}`}>
+                      <EditOutlined className="text-secondary" />
+                    </Link>
+                  </Tooltip>,
+                  <Popconfirm
+                    title="Are you sure to delete this category"
+                    onConfirm={() => deleteCategory(item.slug)}
+                    onCancel={() => console.log("cancelled")}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                    <Tooltip title="Delete category" placement="bottomRight">
+                      <DeleteOutlined className="text-danger" />
+                    </Tooltip>
+                  </Popconfirm>,
+                ]}
+              >
+                {item.name}
+              </Item>
+            ))}
           </div>
         </div>
       </div>
