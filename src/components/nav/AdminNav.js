@@ -49,7 +49,7 @@ const AdminNav = ({ selectedKeys }) => {
           <Link to="/admin/category">Category</Link>
         </Item>
         <Item key="subcategory" icon={<UnorderedListOutlined />}>
-          <Link to="/admin/sub">Sub Category</Link>
+          <Link to="/admin/sub-category">Sub Category</Link>
         </Item>
         <Item key="coupons" icon={<NumberOutlined />}>
           <Link to="/admin/coupons">Coupons</Link>
