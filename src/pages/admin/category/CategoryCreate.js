@@ -98,32 +98,41 @@ const CategoryCreate = () => {
             <Divider orientation="center">Categories</Divider>
           </div>
         </div>
-        <LocalSearch keyword={keyword} setKeyword={setKeyword}/>
+        <LocalSearch keyword={keyword} setKeyword={setKeyword} />
         <div className="row">
           <div className="col-md-12">
             {categories.filter(searched(keyword)).map((item) => (
-              <Item
-                actions={[
-                  <Tooltip title="Edit category" placement="bottomRight">
-                    <Link to={`/admin/category/${item.slug}`}>
-                      <EditOutlined className="text-secondary" />
-                    </Link>
-                  </Tooltip>,
-                  <Popconfirm
-                    title="Are you sure to delete this category"
-                    onConfirm={() => deleteCategory(item.slug)}
-                    onCancel={() => console.log("cancelled")}
-                    okText="Yes"
-                    cancelText="No"
-                  >
-                    <Tooltip title="Delete category" placement="bottomRight">
-                      <DeleteOutlined className="text-danger" />
-                    </Tooltip>
-                  </Popconfirm>,
-                ]}
-              >
-                {item.name}
-              </Item>
+              <div style={{ height: "35px" }}>
+                <Item
+                  key={item._id}
+                  actions={[
+                    <Tooltip title="Edit category" placement="bottomRight">
+                      <Link to={`/admin/category/${item.slug}`}>
+                        <EditOutlined className="text-secondary" />
+                      </Link>
+                    </Tooltip>,
+                    <Popconfirm
+                      title="Are you sure to delete this category"
+                      onConfirm={() => deleteCategory(item.slug)}
+                      onCancel={() => console.log("cancelled")}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <Tooltip title="Delete category" placement="bottomRight">
+                        <DeleteOutlined className="text-danger" />
+                      </Tooltip>
+                    </Popconfirm>,
+                  ]}
+                >
+                  {item.name}
+                </Item>
+                <hr
+                  style={{
+                    position: "relative",
+                    top: "-20px",
+                  }}
+                />
+              </div>
             ))}
           </div>
         </div>
