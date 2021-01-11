@@ -8,7 +8,7 @@ const CategoryForm = ({
   setCategory,
   isLoading,
   text,
-  label
+  label,
 }) => {
   return (
     <form onSubmit={handleSubmit}>
@@ -21,7 +21,6 @@ const CategoryForm = ({
           value={category}
           onChange={(event) => setCategory(event.target.value)}
           disabled={isLoading}
-          autoFocus
         />
       </div>
       {isLoading ? (
