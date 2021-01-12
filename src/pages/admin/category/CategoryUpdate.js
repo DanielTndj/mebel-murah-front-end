@@ -32,12 +32,12 @@ const CategoryUpdate = ({ history, match }) => {
     event.preventDefault();
 
     if (!category) {
-      toast.error("Category is required");
+      toast.error("Main category is required");
       return;
     }
 
     if (category.length < 2) {
-      toast.error("Category must be at least 2 characters long");
+      toast.error("Main category must be at least 2 characters long");
       return;
     }
 
@@ -69,7 +69,7 @@ const CategoryUpdate = ({ history, match }) => {
               category={category}
               setCategory={setCategory}
               text="Submit"
-              label="Update Category"
+              label="Update New Category"
               isLoading={loading}
             />
           </div>

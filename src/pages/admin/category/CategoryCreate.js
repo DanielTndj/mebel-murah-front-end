@@ -32,12 +32,12 @@ const CategoryCreate = () => {
     event.preventDefault();
 
     if (!category) {
-      toast.error("Category is required");
+      toast.error("Main category is required");
       return;
     }
 
     if (category.length < 2) {
-      toast.error("Category must be at least 2 characters long");
+      toast.error("Main category must be at least 2 characters long");
       return;
     }
 
@@ -88,7 +88,7 @@ const CategoryCreate = () => {
               category={category}
               setCategory={setCategory}
               text="Create"
-              label="New Category"
+              label="New Main Category"
               isLoading={loading}
             />
           </div>
@@ -102,9 +102,8 @@ const CategoryCreate = () => {
         <div className="row">
           <div className="col-md-12">
             {categories.filter(searched(keyword)).map((item) => (
-              <div style={{ height: "35px" }}>
+              <div key={item._id} style={{ height: "35px" }}>
                 <Item
-                  key={item._id}
                   actions={[
                     <Tooltip title="Edit category" placement="bottomRight">
                       <Link to={`/admin/category/${item.slug}`}>

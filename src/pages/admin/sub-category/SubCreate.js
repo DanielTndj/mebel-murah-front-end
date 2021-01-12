@@ -20,7 +20,6 @@ import {
   createSubCategory,
   getSubsCategory,
   removeSubCategory,
-  updateSubCategory,
 } from "../../../functions/sub-category";
 
 const SubCreate = () => {
@@ -49,8 +48,13 @@ const SubCreate = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!name || !category) {
-      toast.error("Parent and sub category is required");
+    if (!category) {
+      toast.error("Main category is required");
+      return;
+    }
+
+    if (!name) {
+      toast.error("Sub category is required");
       return;
     }
 
@@ -102,20 +106,20 @@ const SubCreate = () => {
       <div className="m-5 col">
         <div className="row">
           <div className="col-md-4">
+            <label className="mr-2">Choose Main Category</label>
             <div className="form-group">
-              <label className="mr-2">Select Parent Category</label>
-              <Select
-                defaultValue="Please select"
-                style={{ width: 233 }}
-                onChange={(value) => setCategory(value)}
+              <select
+                className="custom-select"
+                onChange={(event) => setCategory(event.target.value)}
               >
+                <option value="">Select category</option>
                 {categories.length > 0 &&
                   categories.map((category) => (
-                    <Option key={category._id} value={category._id}>
+                    <option key={category._id} value={category._id}>
                       {category.name}
-                    </Option>
+                    </option>
                   ))}
-              </Select>
+              </select>
             </div>
 
             <CategoryForm
@@ -137,11 +141,11 @@ const SubCreate = () => {
         <div className="row">
           <div className="col-md-12">
             {subs.filter(searched(keyword)).map((item) => (
-              <div style={{ height: "35px" }}>
+              <div key={item._id} style={{ height: "35px" }}>
                 <Item
                   actions={[
                     <Tooltip title="Edit category" placement="bottomRight">
-                      <Link to={`/admin/sub/${item.slug}`}>
+                      <Link to={`/admin/sub-category/${item.slug}`}>
                         <EditOutlined className="text-secondary" />
                       </Link>
                     </Tooltip>,
