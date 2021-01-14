@@ -10,7 +10,7 @@ const LocalSearch = ({ keyword, setKeyword }) => {
   };
 
   return (
-    <div className="row pb-2">
+    <div className="row pb-2 d-flex justify-content-end">
       <div className="col-md-4">
         <Input
           type="text"

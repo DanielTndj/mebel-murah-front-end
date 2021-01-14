@@ -62,6 +62,8 @@ const CategoryUpdate = ({ history, match }) => {
     <div className="row">
       <AdminNav selectedKeys="category" />
       <div className="m-5 col">
+        <h5>Update Category</h5>
+        <hr className="p-2" />
         <div className="row">
           <div className="col-md-4">
             <CategoryForm
@@ -69,7 +71,7 @@ const CategoryUpdate = ({ history, match }) => {
               category={category}
               setCategory={setCategory}
               text="Submit"
-              label="Update New Category"
+              label="Name of Category"
               isLoading={loading}
             />
           </div>

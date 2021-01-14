@@ -104,9 +104,11 @@ const SubCreate = () => {
     <div className="row">
       <AdminNav selectedKeys="subcategory" />
       <div className="m-5 col">
+        <h5>Create New Sub Category</h5>
+        <hr className="p-2" />
         <div className="row">
           <div className="col-md-4">
-            <label className="mr-2">Choose Main Category</label>
+            <label className="mr-2">Name of Sub Category</label>
             <div className="form-group">
               <select
                 className="custom-select"

@@ -18,12 +18,12 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import CategoryCreate from "./pages/admin/category/CategoryCreate";
 import SubCreate from "./pages/admin/sub-category/SubCreate";
 import SubUpdate from "./pages/admin/sub-category/SubUpdate";
+import ProductCreate from "./pages/admin/product/ProductCreate";
 
 import { auth } from "./firebase";
 import { useDispatch } from "react-redux";
 import { currentUser } from "./functions/auth";
 import CategoryUpdate from "./pages/admin/category/CategoryUpdate";
-
 const App = () => {
   let dispatch = useDispatch();
 
@@ -80,6 +80,7 @@ const App = () => {
           path="/admin/sub-category/:slug"
           component={SubUpdate}
         />
+        <AdminRoute exact path="/admin/product" component={ProductCreate} />
       </Switch>
     </>
   );

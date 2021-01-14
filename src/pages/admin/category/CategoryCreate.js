@@ -81,6 +81,8 @@ const CategoryCreate = () => {
     <div className="row">
       <AdminNav selectedKeys="category" />
       <div className="m-5 col">
+        <h5>Create New Category</h5>
+        <hr className="p-2" />
         <div className="row">
           <div className="col-md-4">
             <CategoryForm
@@ -88,7 +90,7 @@ const CategoryCreate = () => {
               category={category}
               setCategory={setCategory}
               text="Create"
-              label="New Main Category"
+              label="Name of category"
               isLoading={loading}
             />
           </div>

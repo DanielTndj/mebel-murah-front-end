@@ -72,39 +72,41 @@ const SubUpdate = ({ history, match }) => {
     <div className="row">
       <AdminNav selectedKeys="subcategory" />
       <div className="m-5 col">
-        {/* <div className="row"> */}
-        <div className="col-md-4">
-          <div className="form-group">
-            <label className="mr-2">Choose Main Category</label>
-            <select
-              className="custom-select"
-              onChange={(event) => setParent(event.target.value)}
-            >
-              {categories.length > 0 &&
-                categories.map((category) => (
-                  <option
-                    key={category._id}
-                    value={category._id}
-                    selected={category._id === parent}
-                  >
-                    {category.name}
-                  </option>
-                ))}
-            </select>
-          </div>
+        <h5>Update Sub Category</h5>
+        <hr className="p-2" />
+        <div className="row">
+          <div className="col-md-4">
+            <div className="form-group">
+              <label className="mr-2">Name of Sub Category</label>
+              <select
+                className="custom-select"
+                onChange={(event) => setParent(event.target.value)}
+              >
+                {categories.length > 0 &&
+                  categories.map((category) => (
+                    <option
+                      key={category._id}
+                      value={category._id}
+                      selected={category._id === parent}
+                    >
+                      {category.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
 
-          <CategoryForm
-            handleSubmit={handleSubmit}
-            category={name}
-            setCategory={setName}
-            text="Submit"
-            label="Update Sub Category"
-            isLoading={loading}
-          />
+            <CategoryForm
+              handleSubmit={handleSubmit}
+              category={name}
+              setCategory={setName}
+              text="Submit"
+              label="Update Sub Category"
+              isLoading={loading}
+            />
+          </div>
         </div>
       </div>
     </div>
-    // </div>
   );
 };
 
