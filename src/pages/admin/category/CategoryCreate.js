@@ -113,7 +113,7 @@ const CategoryCreate = () => {
                       </Link>
                     </Tooltip>,
                     <Popconfirm
-                      title="Are you sure to delete this category"
+                      title="Are you sure to delete this category?"
                       onConfirm={() => deleteCategory(item.slug)}
                       onCancel={() => console.log("cancelled")}
                       okText="Yes"

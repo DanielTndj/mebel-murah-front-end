@@ -6,6 +6,7 @@ import { createProduct } from "../../../functions/product";
 import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { getCategories, getSubsCategory } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
+import Spinner from "../../../components/spinner/Spinner";
 
 const initialState = {
   title: "",
@@ -29,6 +30,7 @@ const ProductCreate = () => {
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
   const [showSub, setShowSub] = useState(false);
+  const [loadImage, setLoadImage] = useState(false);
 
   useEffect(() => {
     loadCategories();
@@ -90,14 +92,19 @@ const ProductCreate = () => {
       <AdminNav selectedKeys="product" />
       <div className="m-5 col">
         <h5>Create New Product</h5>
-
-        {JSON.stringify(values.images)}
         <hr className="p-2" />
         <div className="row">
-          <div className="col-md-8">
+          <div className="col-md-12">
+            {loadImage && (
+              <div className="pb-4">
+                <Spinner />
+              </div>
+            )}
+
             <FileUpload
               values={values}
               setValues={setValues}
+              setLoadImage={setLoadImage}
             />
             <ProductCreateForm
               handleSubmit={handleSubmit}

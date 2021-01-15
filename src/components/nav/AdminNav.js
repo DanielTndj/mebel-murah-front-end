@@ -43,7 +43,7 @@ const AdminNav = ({ selectedKeys }) => {
           <Link to="/admin/product">Product</Link>
         </Item>
         <Item key="products" icon={<AppstoreOutlined />}>
-          <Link to="/admin/product">Products</Link>
+          <Link to="/admin/products">Products</Link>
         </Item>
         <Item key="category" icon={<UnorderedListOutlined />}>
           <Link to="/admin/category">Category</Link>
