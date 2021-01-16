@@ -46,17 +46,10 @@ const Products = () => {
   return (
     <div className="row">
       <AdminNav selectedKeys="products" />
-
       <div className="m-5 col offset-col-3 col-md">
         <h5>All Products</h5>
         <hr className="p-2" />
         <div className="row">
-          {/* {loading ? (
-            <div>
-              <Skeleton active />
-              <Skeleton active />
-            </div>
-          ) : ( */}
           {products.map((product) => (
             <div key={product._id} className="col-md-3 pb-4">
               <AdminProductCard
@@ -66,7 +59,6 @@ const Products = () => {
               />
             </div>
           ))}
-          {/* // )} */}
         </div>
       </div>
     </div>

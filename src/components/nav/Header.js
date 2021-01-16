@@ -4,6 +4,7 @@ import {
   BuildOutlined,
   HomeOutlined,
   LogoutOutlined,
+  ShopTwoTone,
   UserAddOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -38,7 +39,7 @@ const Header = () => {
 
   return (
     <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
-      <Item key="home" icon={<BuildOutlined />}>
+      <Item key="home" icon={<ShopTwoTone />}>
         <Link to="/">Home</Link>
       </Item>
 
