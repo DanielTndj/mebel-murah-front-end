@@ -4,20 +4,23 @@ import Spinner from "../../components/spinner/Spinner";
 
 const { Option } = Select;
 
-const ProductCreateForm = ({
+const ProductUpdateForm = ({
   handleSubmit,
   handleChange,
-  handleCategoryChange,
   values,
   setValues,
+  handleCategoryChange,
+  categories,
   subOptions,
-  showSub,
+  arrayOfSubIds,
+  setArrayOfSubIds,
+  selectedCategory,
+  loading
 }) => {
   const {
     title,
     description,
     price,
-    categories,
     category,
     subs,
     shipping,
@@ -27,7 +30,6 @@ const ProductCreateForm = ({
     fabrics,
     color,
     fabric,
-    loading,
   } = values;
 
   return (
@@ -68,11 +70,11 @@ const ProductCreateForm = ({
       <div className="form-group">
         <label>Shipping</label>
         <select
+          value={shipping === "Yes" ? "Yes" : "No"}
           name="shipping"
           className="custom-select"
           onChange={handleChange}
         >
-          <option value="default">Select shipping</option>
           <option value="No">No</option>
           <option value="Yes">Yes</option>
         </select>
@@ -90,8 +92,12 @@ const ProductCreateForm = ({
       </div>
       <div className="form-group">
         <label>Color</label>
-        <select name="color" className="custom-select" onChange={handleChange}>
-          <option value="default">Select a color</option>
+        <select
+          name="color"
+          className="custom-select"
+          onChange={handleChange}
+          value={color}
+        >
           {colors &&
             colors.map((color) => (
               <option key={color} value={color}>
@@ -102,8 +108,12 @@ const ProductCreateForm = ({
       </div>
       <div className="form-group">
         <label>Fabric</label>
-        <select name="fabric" className="custom-select" onChange={handleChange}>
-          <option value="default">Select a fabric</option>
+        <select
+          name="fabric"
+          className="custom-select"
+          onChange={handleChange}
+          value={fabric}
+        >
           {fabrics &&
             fabrics.map((fabric) => (
               <option key={fabric} value={fabric}>
@@ -118,8 +128,9 @@ const ProductCreateForm = ({
           name="category"
           className="custom-select"
           onChange={handleCategoryChange}
+          // selected category = new value
+          value={selectedCategory ? selectedCategory : category._id}
         >
-          <option value="default">Select a category</option>
           {categories.length > 0 &&
             categories.map((category) => (
               <option key={category._id} value={category._id}>
@@ -129,25 +140,23 @@ const ProductCreateForm = ({
         </select>
       </div>
 
-      {showSub && (
-        <div className="form-group">
-          <label>Categories</label>
-          <Select
-            mode="multiple"
-            style={{ width: "100%" }}
-            placeholder="Please select"
-            value={subs}
-            onChange={(value) => setValues({ ...values, subs: value })}
-          >
-            {subOptions.length &&
-              subOptions.map((option) => (
-                <Option key={option._id} value={option._id}>
-                  {option.name}
-                </Option>
-              ))}
-          </Select>
-        </div>
-      )}
+      <div className="form-group">
+        <label>Sub Categories</label>
+        <Select
+          mode="multiple"
+          style={{ width: "100%" }}
+          placeholder="Please select"
+          value={arrayOfSubIds}
+          onChange={(value) => setArrayOfSubIds(value)}
+        >
+          {subOptions.length &&
+            subOptions.map((option) => (
+              <Option key={option._id} value={option._id}>
+                {option.name}
+              </Option>
+            ))}
+        </Select>
+      </div>
 
       {loading ? (
         <Spinner />
@@ -159,11 +168,11 @@ const ProductCreateForm = ({
           shape="round"
           size="large"
         >
-          Update
+          Submit
         </Button>
       )}
     </form>
   );
 };
 
-export default ProductCreateForm;
+export default ProductUpdateForm;
