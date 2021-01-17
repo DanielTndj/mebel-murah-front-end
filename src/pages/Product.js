@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { getProduct, productStar } from "../functions/product";
 import SingleProduct from "../components/cards/SingleProduct";
-import { useSelector } from "react-redux";  
+import { useSelector } from "react-redux";
+import { getRelated } from "../functions/product";
+import ProductCard from "../components/cards/ProductCard";
 
 const Product = ({ match }) => {
   const [product, setProduct] = useState({});
   const [star, setStar] = useState(0);
+  const [related, setRelated] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { slug } = match.params;
   const { user } = useSelector((state) => ({ ...state }));
 
@@ -27,7 +31,17 @@ const Product = ({ match }) => {
   });
 
   const loadProduct = () => {
-    getProduct(slug).then((res) => setProduct(res.data));
+    setLoading(true);
+
+    getProduct(slug).then((res) => {
+      setLoading(false);
+      setProduct(res.data);
+
+      getRelated(res.data._id).then((res) => {
+        setLoading(false);
+        setRelated(res.data);
+      });
+    });
   };
 
   const onStarClick = (newRating, name) => {
@@ -49,9 +63,18 @@ const Product = ({ match }) => {
         />
       </div>
 
-      <div className="row p-5">
-        <div className="col">
-          <h3>Related Products</h3>
+      <div className='px-5'>
+        <h3 className="pt-5 pb-2">Related Products</h3>
+        <div className="row">
+          {related.length ? (
+            related.map((product) => (
+              <div key={product._id} className="col-md-4">
+                <ProductCard product={product} loading={loading} />
+              </div>
+            ))
+          ) : (
+            <h4 className="text-center">No products found</h4>
+          )}
         </div>
       </div>
     </div>
