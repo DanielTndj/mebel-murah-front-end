@@ -24,6 +24,7 @@ const Home = () => {
           <Carousel autoplay>
             {bannerImages.map((image) => (
               <img
+                key={image.uri}
                 src={image}
                 alt=""
                 className="image-responsive"
@@ -41,7 +42,7 @@ const Home = () => {
           <Button
             type="primary"
             size="large"
-            className="btn btn-warning btn-raised"
+            className="btn btn-outline-warning"
             onClick={scrollToBottom}
           >
             Shop Now
@@ -51,7 +52,7 @@ const Home = () => {
       <div ref={divRef}>
         <NewArrivals />
       </div>
-      <BestSellers/>
+      <BestSellers />
     </div>
   );
 };

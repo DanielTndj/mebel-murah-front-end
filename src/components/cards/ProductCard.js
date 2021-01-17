@@ -1,8 +1,8 @@
 import React from "react";
 import { Card, Image } from "antd";
 import { EyeTwoTone, ShoppingTwoTone } from "@ant-design/icons";
-
 import { Link } from "react-router-dom";
+import { showAverage } from "../../functions/rating";
 
 const { Meta } = Card;
 const fallback =
@@ -39,6 +39,14 @@ const ProductCard = ({ product, loading }) => {
         ]
       }
     >
+      {product && product.ratings && product.ratings.length > 0 ? (
+        <div className="pt-3 pb-2">{showAverage(product)}</div>
+      ) : (
+        <p className="font-weight-light" style={{paddingTop: '15px'}}>
+          No rating yet
+        </p>
+      )}
+
       <Meta
         title={title}
         description={description.length > 50 ? subDescription : description}

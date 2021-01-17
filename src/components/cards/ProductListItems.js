@@ -41,7 +41,7 @@ const ProductListItems = ({ product }) => {
         <Collapse ghost>
           <Panel header="Sub Categories">
             {subs.map((sub) => (
-              <div className="row ml-1 py-1">
+              <div className="row ml-1 py-1" key={sub._id}>
                 <Link to={`/sub/${sub.slug}`}>{sub.name}</Link>
                 <br />
                 {/* <hr /> */}
