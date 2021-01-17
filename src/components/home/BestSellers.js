@@ -1,19 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { getProducts } from "../../functions/product";
+import { getProducts, getProductsCount } from "../../functions/product";
 import ProductCard from "../cards/ProductCard";
+import { Pagination } from "antd";
 
 const BestSellers = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [productsCount, setProductsCount] = useState(0);
 
   useEffect(() => {
     loadProducts();
+  }, [page]);
+
+  useEffect(() => {
+    getProductsCount().then((res) => setProductsCount(res.data));
   }, []);
 
   const loadProducts = () => {
     setLoading(true);
 
-    getProducts("sold", "desc", 3)
+    getProducts("sold", "desc", page)
       .then((res) => {
         setLoading(false);
         setProducts(res.data);
@@ -25,18 +32,29 @@ const BestSellers = () => {
   };
 
   return (
-    <div>
-      <div className="container">
-        <h3 className="pt-5 pb-2">Best Sellers</h3>
-        <div className="row">
-          {products.map((product) => (
-            <div key={product._id} className="col-md-4">
-              <ProductCard product={product} loading={loading} />
-            </div>
-          ))}
+    <>
+      <div>
+        <div className="container">
+          <h3 className="pt-5 pb-2">Best Sellers</h3>
+          <div className="row">
+            {products.map((product) => (
+              <div key={product._id} className="col-md-4">
+                <ProductCard product={product} loading={loading} />
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+      <div className="row">
+        <div className="col-md-4 offset-md-4 text-center pt-5 pb-3">
+          <Pagination
+            current={page}
+            total={(productsCount / 3) * 10}
+            onChange={(value) => setPage(value)}
+          />
+        </div>
+      </div>
+    </>
   );
 };
 
