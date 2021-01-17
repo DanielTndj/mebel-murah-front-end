@@ -15,7 +15,7 @@ const fallback =
 
 const ProductCard = ({ product, loading }) => {
   const { title, description, images, slug } = product;
-  const subDescription = description.substring(0, 50) + "...";
+  const subDescription = description.substring(0, 40) + "...";
 
   return (
     <Card
@@ -46,7 +46,7 @@ const ProductCard = ({ product, loading }) => {
     >
       <Meta
         title={title}
-        description={description.length > 75 ? subDescription : description}
+        description={description.length > 50 ? subDescription : description}
       />
     </Card>
   );

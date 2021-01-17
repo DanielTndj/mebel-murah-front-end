@@ -159,7 +159,7 @@ const ProductCreateForm = ({
           shape="round"
           size="large"
         >
-          Update
+          Submit
         </Button>
       )}
     </form>

@@ -1,33 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
-import { getProductsByCount } from "../functions/product";
-import ProductCard from "../components/cards/ProductCard";
+import React, { useRef } from "react";
 import TypeWriter from "../components/cards/TypeWriter";
-import bannerImage from "../image/banner-image.jpg";
+import bannerImage1 from "../image/banner-image-1.jpg";
 import bannerImage2 from "../image/banner-image-2.jpg";
 import bannerImage3 from "../image/banner-image-3.jpg";
+import bannerImage4 from "../image/banner-image-4.png";
 import { Button, Carousel } from "antd";
+import NewArrivals from "../components/home/NewArrivals";
+import BestSellers from "../components/home/BestSellers";
+
+const bannerImages = [bannerImage1, bannerImage2, bannerImage3, bannerImage4];
 
 const Home = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
   const divRef = useRef(null);
-
-  useEffect(() => {
-    loadProducts();
-  }, []);
-
-  const loadProducts = () => {
-    setLoading(true);
-
-    getProductsByCount(2)
-      .then((res) => {
-        setLoading(false);
-        setProducts(res.data);
-      })
-      .catch((err) => {
-        setLoading(false);
-      });
-  };
 
   const scrollToBottom = () => {
     divRef.current.scrollIntoView({ behavior: "smooth" });
@@ -38,30 +22,14 @@ const Home = () => {
       <div className="row d-flex align-items-center">
         <div className="col-md-8">
           <Carousel autoplay>
-            <div>
+            {bannerImages.map((image) => (
               <img
-                src={bannerImage}
+                src={image}
                 alt=""
                 className="image-responsive"
                 width="100%"
               />
-            </div>
-            <div>
-              <img
-                src={bannerImage2}
-                alt=""
-                className="image-responsive"
-                width="100%"
-              />
-            </div>
-            <div>
-              <img
-                src={bannerImage3}
-                alt=""
-                className="image-responsive"
-                width="100%"
-              />
-            </div>
+            ))}
           </Carousel>
         </div>
         <div className="col-md-4 p-5">
@@ -80,17 +48,10 @@ const Home = () => {
           </Button>
         </div>
       </div>
-      <div className="container" ref={divRef}>
-        <h3 className="py-3">All Products</h3>
-        <div className="row">
-          {products.map((product) => (
-            <div key={product._id} className="col-md-4">
-              <ProductCard product={product} loading={loading} />
-            </div>
-          ))}
-        </div>
+      <div ref={divRef}>
+        <NewArrivals />
       </div>
-      {/* )} */}
+      <BestSellers/>
     </div>
   );
 };
