@@ -73,7 +73,7 @@ const Product = ({ match }) => {
               </div>
             ))
           ) : (
-            <h4 className="text-center">No products found</h4>
+            <h4 className="text-center p-3">No products found</h4>
           )}
         </div>
       </div>

@@ -5,6 +5,7 @@ import AdminProductCard from "../../../components/cards/AdminProductCard";
 import { removeProduct } from "../../../functions/product";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { Empty } from "antd";
 
 const Products = () => {
   const [products, setProducts] = useState([]);
@@ -50,15 +51,19 @@ const Products = () => {
         <h5>All Products</h5>
         <hr className="p-2" />
         <div className="row">
-          {products.map((product) => (
-            <div key={product._id} className="col-md-3 pb-4">
-              <AdminProductCard
-                product={product}
-                loading={loading}
-                handleRemove={handleRemove}
-              />
-            </div>
-          ))}
+          {products ? (
+            products.map((product) => (
+              <div key={product._id} className="col-md-3 pb-4">
+                <AdminProductCard
+                  product={product}
+                  loading={loading}
+                  handleRemove={handleRemove}
+                />
+              </div>
+            ))
+          ) : (
+            <Empty />
+          )}
         </div>
       </div>
     </div>

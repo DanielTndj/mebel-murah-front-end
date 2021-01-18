@@ -7,6 +7,7 @@ import bannerImage4 from "../image/banner-image-4.png";
 import { Button, Carousel } from "antd";
 import NewArrivals from "../components/home/NewArrivals";
 import BestSellers from "../components/home/BestSellers";
+import CategoryList from "../components/category/CategoryList";
 
 const bannerImages = [bannerImage1, bannerImage2, bannerImage3, bannerImage4];
 
@@ -22,14 +23,14 @@ const Home = () => {
       <div className="row d-flex align-items-center">
         <div className="col-md-8">
           <Carousel autoplay>
-            {bannerImages.map((image) => (
-              <img
-                key={image.uri}
-                src={image}
-                alt=""
-                className="image-responsive"
-                width="100%"
-              />
+            {bannerImages.map((image, index) => (
+                <img
+                  key={index}
+                  src={image}
+                  alt=""
+                  className="image-responsive"
+                  width="100%"
+                />
             ))}
           </Carousel>
         </div>
@@ -42,7 +43,7 @@ const Home = () => {
           <Button
             type="primary"
             size="large"
-            className="btn btn-outline-warning"
+            className="btn btn-outline-warning btn-raised"
             onClick={scrollToBottom}
           >
             Shop Now
@@ -53,6 +54,7 @@ const Home = () => {
         <NewArrivals />
       </div>
       <BestSellers />
+      <CategoryList title="Category" />
     </div>
   );
 };

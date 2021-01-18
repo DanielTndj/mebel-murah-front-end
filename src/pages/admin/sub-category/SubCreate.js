@@ -3,15 +3,7 @@ import AdminNav from "../../../components/nav/AdminNav";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { getCategories } from "../../../functions/category";
-import {
-  List,
-  Divider,
-  Tooltip,
-  Popconfirm,
-  Input,
-  Select,
-  Typography,
-} from "antd";
+import { List, Divider, Tooltip, Popconfirm, Select, Empty } from "antd";
 import { Link } from "react-router-dom";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import CategoryForm from "../../../components/forms/CategoryForm";
@@ -142,38 +134,45 @@ const SubCreate = () => {
         <LocalSearch keyword={keyword} setKeyword={setKeyword} />
         <div className="row">
           <div className="col-md-12">
-            {subs.filter(searched(keyword)).map((item) => (
-              <div key={item._id} style={{ height: "35px" }}>
-                <Item
-                  actions={[
-                    <Tooltip title="Edit category" placement="bottomRight">
-                      <Link to={`/admin/sub-category/${item.slug}`}>
-                        <EditOutlined className="text-secondary" />
-                      </Link>
-                    </Tooltip>,
-                    <Popconfirm
-                      title="Are you sure to delete this category"
-                      onConfirm={() => deleteSubCategory(item.slug)}
-                      onCancel={() => console.log("cancelled")}
-                      okText="Yes"
-                      cancelText="No"
-                    >
-                      <Tooltip title="Delete category" placement="bottomRight">
-                        <DeleteOutlined className="text-danger" />
-                      </Tooltip>
-                    </Popconfirm>,
-                  ]}
-                >
-                  {item.name}
-                </Item>
-                <hr
-                  style={{
-                    position: "relative",
-                    top: "-20px",
-                  }}
-                />
-              </div>
-            ))}
+            {subs ? (
+              subs.filter(searched(keyword)).map((item) => (
+                <div key={item._id} style={{ height: "35px" }}>
+                  <Item
+                    actions={[
+                      <Tooltip title="Edit category" placement="bottomRight">
+                        <Link to={`/admin/sub-category/${item.slug}`}>
+                          <EditOutlined className="text-secondary" />
+                        </Link>
+                      </Tooltip>,
+                      <Popconfirm
+                        title="Are you sure to delete this category"
+                        onConfirm={() => deleteSubCategory(item.slug)}
+                        onCancel={() => console.log("cancelled")}
+                        okText="Yes"
+                        cancelText="No"
+                      >
+                        <Tooltip
+                          title="Delete category"
+                          placement="bottomRight"
+                        >
+                          <DeleteOutlined className="text-danger" />
+                        </Tooltip>
+                      </Popconfirm>,
+                    ]}
+                  >
+                    {item.name}
+                  </Item>
+                  <hr
+                    style={{
+                      position: "relative",
+                      top: "-20px",
+                    }}
+                  />
+                </div>
+              ))
+            ) : (
+              <Empty />
+            )}
           </div>
         </div>
       </div>

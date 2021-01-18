@@ -13,7 +13,7 @@ import firebase from "firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-const { SubMenu, Item } = Menu;
+const { SubMenu, Item, ItemGroup } = Menu;
 
 const Header = () => {
   const [current, setCurrent] = useState("home");
