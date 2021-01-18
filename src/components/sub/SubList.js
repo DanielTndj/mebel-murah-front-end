@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getCategories } from "../../functions/category";
+import { getSubsCategory } from "../../functions/sub-category";
 import { Empty, Button } from "antd";
 import Spinner from "../spinner/Spinner";
 
-const CategoryList = ({ title }) => {
-  const [categories, setCategories] = useState([]);
+const SubList = ({ title }) => {
+  const [subs, setSubs] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
 
-    getCategories()
+    getSubsCategory()
       .then((res) => {
         setLoading(false);
-        setCategories(res.data);
+        setSubs(res.data);
       })
       .catch((err) => {
         setLoading(false);
@@ -22,16 +22,16 @@ const CategoryList = ({ title }) => {
       });
   }, []);
 
-  const showCategories = () =>
-    categories.map((category) => (
+  const showSubs = () =>
+    subs.map((sub) => (
       <Button
-        key={category._id}
+        key={sub._id}
         type="primary"
         size="middle"
         shape="round"
         className="btn btn-outline-dark btn-raised mr-3 mb-3"
       >
-        <Link to={`/category/${category.slug}`}>{category.name}</Link>
+        <Link to={`/sub/${sub.slug}`}>{sub.name}</Link>
       </Button>
     ));
 
@@ -39,10 +39,10 @@ const CategoryList = ({ title }) => {
     <div className="container">
       <h3 className="pt-5 pb-2">{title}</h3>
       <div className="row">
-        <div className="col">{loading ? <Spinner /> : showCategories()}</div>
+        <div className="col">{loading ? <Spinner /> : showSubs()}</div>
       </div>
     </div>
   );
 };
 
-export default CategoryList;
+export default SubList;

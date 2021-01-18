@@ -15,6 +15,7 @@ const ProductCard = ({ product, loading }) => {
   return (
     <Card
       loading={loading}
+      style={{ marginBottom: "30px" }}
       cover={
         !loading && (
           <Image
@@ -42,7 +43,7 @@ const ProductCard = ({ product, loading }) => {
       {product && product.ratings && product.ratings.length > 0 ? (
         <div className="pt-3 pb-2">{showAverage(product)}</div>
       ) : (
-        <p className="font-weight-light" style={{paddingTop: '15px'}}>
+        <p className="font-weight-light" style={{ paddingTop: "15px" }}>
           No rating yet
         </p>
       )}

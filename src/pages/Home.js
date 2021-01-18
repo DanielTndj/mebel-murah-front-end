@@ -8,6 +8,7 @@ import { Button, Carousel } from "antd";
 import NewArrivals from "../components/home/NewArrivals";
 import BestSellers from "../components/home/BestSellers";
 import CategoryList from "../components/category/CategoryList";
+import SubList from "../components/sub/SubList";
 
 const bannerImages = [bannerImage1, bannerImage2, bannerImage3, bannerImage4];
 
@@ -55,6 +56,7 @@ const Home = () => {
       </div>
       <BestSellers />
       <CategoryList title="Category" />
+      <SubList title="Sub Category" />
     </div>
   );
 };

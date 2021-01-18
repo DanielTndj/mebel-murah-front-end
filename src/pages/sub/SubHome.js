@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { getCategory } from "../../functions/category";
+import { getSubCategory } from "../../functions/sub-category";
 import { Link } from "react-router-dom";
 import { Empty, Button } from "antd";
 import ProductCard from "../../components/cards/ProductCard";
 
-const CategoryHome = ({ match }) => {
+const SubHome = ({ match }) => {
   const { slug } = match.params;
-  const [category, setCategory] = useState({});
+  const [sub, setSub] = useState({});
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
 
-    getCategory(slug).then((res) => {
+    getSubCategory(slug).then((res) => {
       setLoading(false);
-      setCategory(res.data.category);
+      setSub(res.data.sub);
       setProducts(res.data.products);
     });
   }, []);
@@ -25,7 +25,7 @@ const CategoryHome = ({ match }) => {
       <h3 className="pt-5 pb-2">
         {products.length > 0 && (
           <div>
-            {products.length} Products in {category.name} Category
+            {products.length} Products in {sub.name} Sub Category
           </div>
         )}
       </h3>
@@ -61,4 +61,4 @@ const CategoryHome = ({ match }) => {
   );
 };
 
-export default CategoryHome;
+export default SubHome;
