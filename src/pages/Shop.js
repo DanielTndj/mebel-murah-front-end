@@ -3,10 +3,10 @@ import {
   getProductsByCount,
   fetchProductsByFilter,
 } from "../functions/product";
+import { getCategories } from "../functions/category";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
-import { Menu, Slider, Empty } from "antd";
-import { DollarOutlined } from "@ant-design/icons";
+import { Menu, Slider, Empty, Checkbox } from "antd";
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -15,18 +15,23 @@ const Shop = () => {
   const [loading, setLoading] = useState(false);
   const [price, setPrice] = useState([0, 0]);
   const [ok, setOk] = useState(false);
+  // show categories option on checkbox
+  const [categories, setCategories] = useState([]);
+  // send categories selected to backend
+  const [categoryIds, setCategoryIds] = useState([]);
+
   let { search } = useSelector((state) => ({ ...state }));
   const { text } = search;
   const dispatch = useDispatch();
 
   useEffect(() => {
     loadAllProducts();
+    //fetch categories
+    getCategories().then((res) => setCategories(res.data));
   }, []);
 
   const fetchProducts = (arg) => {
-    // setLoading(true);
     fetchProductsByFilter(arg).then((res) => {
-      // setLoading(false);
       setProducts(res.data);
     });
   };
@@ -34,10 +39,9 @@ const Shop = () => {
   //load products on page shop load
   const loadAllProducts = () => {
     // setLoading(true);
-
     getProductsByCount(12).then((res) => {
-      // setLoading(false);
       setProducts(res.data);
+      setLoading(false);
     });
   };
 
@@ -56,7 +60,8 @@ const Shop = () => {
   }, [ok]);
 
   const handleSlider = (value) => {
-    //update redux text state to '' (reset search input)
+    //update redux text state to '' (reset search input) & reset checkbox
+    setCategoryIds([]);
     dispatch({
       type: "SEARCH_QUERY",
       payload: { text: "" },
@@ -68,22 +73,60 @@ const Shop = () => {
     }, 300);
   };
 
+  // load products based on categories
+  // show each category in a list of checkbox
+  const showCategories = () =>
+    categories.map((category) => (
+      <div key={category._id}>
+        <Checkbox
+          onChange={handleCheck}
+          className="pb-2 pl-4 pr-4"
+          value={category._id}
+          name="category"
+          checked={categoryIds.includes(category._id)}
+        >
+          {category.name}
+        </Checkbox>
+        <br />
+      </div>
+    ));
+
+  const handleCheck = (event) => {
+    //reset value on state
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    // console.log(event.target.value)
+    let inTheState = [...categoryIds];
+    let justChecked = event.target.value;
+    let foundInTheState = inTheState.indexOf(justChecked); //return true/-1
+
+    // item haven't checked by user
+    if (foundInTheState === -1) {
+      // push new value
+      inTheState.push(justChecked);
+    } else {
+      //found same item, pull the item from arr
+      inTheState.splice(foundInTheState, 1);
+    }
+
+    setCategoryIds(inTheState);
+    // console.log(inTheState);
+    fetchProducts({ category: inTheState });
+  };
+
   return (
     <div className="container-fluid pt-5">
       <div className="row">
         <div className="col-md-3">
           <h4 className="pb-2 ml-4" style={{ fontWeight: "400" }}>
-            Search
+            Search By
           </h4>
-          <Menu defaultOpenKeys={["1"]} mode="inline">
-            <SubMenu
-              key="1"
-              title={
-                <span className="h6">
-                  <DollarOutlined /> Price
-                </span>
-              }
-            >
+          <Menu mode="inline">
+            {/* price */}
+            <SubMenu title={<span className="h6">Price</span>}>
               <div>
                 <Slider
                   className="ml-4 mr-4"
@@ -94,6 +137,11 @@ const Shop = () => {
                   max="20000000"
                 />
               </div>
+            </SubMenu>
+
+            {/* categories */}
+            <SubMenu title={<span className="h6">Categories</span>}>
+              <div>{showCategories()}</div>
             </SubMenu>
           </Menu>
         </div>

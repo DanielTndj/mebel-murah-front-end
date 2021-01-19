@@ -4,6 +4,7 @@ import SingleProduct from "../components/cards/SingleProduct";
 import { useSelector } from "react-redux";
 import { getRelated } from "../functions/product";
 import ProductCard from "../components/cards/ProductCard";
+import { Empty } from "antd";
 
 const Product = ({ match }) => {
   const [product, setProduct] = useState({});
@@ -63,7 +64,7 @@ const Product = ({ match }) => {
         />
       </div>
 
-      <div className='px-5'>
+      <div className="px-5">
         <h3 className="pt-5 pb-2">Related Products</h3>
         <div className="row">
           {related.length ? (
@@ -73,7 +74,9 @@ const Product = ({ match }) => {
               </div>
             ))
           ) : (
-            <h4 className="text-center p-3">No products found</h4>
+            <div className="offset-md-4 col-md-4">
+              <Empty />
+            </div>
           )}
         </div>
       </div>

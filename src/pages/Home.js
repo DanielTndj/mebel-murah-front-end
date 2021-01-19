@@ -3,7 +3,7 @@ import TypeWriter from "../components/cards/TypeWriter";
 import bannerImage1 from "../image/banner-image-1.jpg";
 import bannerImage2 from "../image/banner-image-2.jpg";
 import bannerImage3 from "../image/banner-image-3.jpg";
-import bannerImage4 from "../image/banner-image-4.png";
+import bannerImage4 from "../image/banner-image-4.jpg";
 import { Button, Carousel } from "antd";
 import NewArrivals from "../components/home/NewArrivals";
 import BestSellers from "../components/home/BestSellers";
@@ -25,13 +25,15 @@ const Home = () => {
         <div className="col-md-8">
           <Carousel autoplay>
             {bannerImages.map((image, index) => (
-                <img
-                  key={index}
-                  src={image}
-                  alt=""
-                  className="image-responsive"
-                  width="100%"
-                />
+              <img
+                key={index}
+                src={image}
+                alt=""
+                style={{ objectFit: "cover", width: "2em", height: "3em" }}
+                className="image-responsive d-none d-sm-block"
+                // height="5%"
+                // width="10%"
+              />
             ))}
           </Carousel>
         </div>

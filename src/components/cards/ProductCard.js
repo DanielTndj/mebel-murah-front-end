@@ -40,6 +40,7 @@ const ProductCard = ({ product, loading }) => {
         ]
       }
     >
+    
       {product && product.ratings && product.ratings.length > 0 ? (
         <div className="pt-3 pb-2">{showAverage(product)}</div>
       ) : (
@@ -52,6 +53,7 @@ const ProductCard = ({ product, loading }) => {
         title={`${title} - IDR ${price} `}
         description={description.length > 50 ? subDescription : description}
       />
+      {/* <Meta className='py-2' description={`Color: ${color}`}/> */}
     </Card>
   );
 };

@@ -6,17 +6,17 @@ export const showAverage = (product) => {
     let ratingsArray = product && product.ratings;
     let total = [];
     let length = ratingsArray.length;
-    console.log("jumlah yg ngasih rating ", length);
+    // console.log("jumlah yg ngasih rating ", length);
 
     ratingsArray.map((rating) => total.push(rating.star));
     let totalReduced = total.reduce((prev, next) => prev + next, 0);
-    console.log("jumlah bintang ", totalReduced);
+    // console.log("jumlah bintang ", totalReduced);
 
     let highest = length * 5;
-    console.log("highest ", highest);
+    // console.log("highest ", highest);
 
     let result = (totalReduced * 5) / highest;
-    console.log("result ", result);
+    // console.log("result ", result);
 
     return (
       <>
