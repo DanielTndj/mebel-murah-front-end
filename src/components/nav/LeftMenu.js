@@ -25,6 +25,9 @@ const LeftMenu = ({ handleClick, current }) => {
       <Item key="home">
         <Link to="/">Home</Link>
       </Item>
+      <Item key="shop">
+        <Link to="/shop">Shop</Link>
+      </Item>
       {/* <SubMenu key="sub1" title={<span>Shop</span>}>
         <MenuItemGroup title="Item 1">
           <Menu.Item key="setting:1">Option 1</Menu.Item>
