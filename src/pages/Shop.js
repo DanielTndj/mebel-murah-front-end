@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { getProductsByCount } from "../functions/product";
+import {
+  getProductsByCount,
+  fetchProductsByFilter,
+} from "../functions/product";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
 import { Empty } from "antd";
@@ -7,15 +10,36 @@ import { Empty } from "antd";
 const Shop = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  let { search } = useSelector((state) => ({ ...state }));
+  const { text } = search;
 
   useEffect(() => {
     loadAllProducts();
   }, []);
 
+  //load products on page shop load
   const loadAllProducts = () => {
     setLoading(true);
 
     getProductsByCount(12).then((res) => {
+      setLoading(false);
+      setProducts(res.data);
+    });
+  };
+
+  //load products on user input (on search)
+  useEffect(() => {
+    const delayed = setTimeout(() => {
+      fetchProducts({ query: text });
+    }, 300);
+
+    return () => clearTimeout(delayed);
+  }, [text]);
+
+  const fetchProducts = (arg) => {
+    setLoading(true);
+
+    fetchProductsByFilter(arg).then((res) => {
       setLoading(false);
       setProducts(res.data);
     });
