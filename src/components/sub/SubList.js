@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { getSubsCategory } from "../../functions/sub-category";
 import { Empty, Button } from "antd";
 import Spinner from "../spinner/Spinner";
+import { useStateIfMounted } from "use-state-if-mounted";
 
 const SubList = ({ title }) => {
-  const [subs, setSubs] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [subs, setSubs] = useStateIfMounted([]);
+  const [loading, setLoading] = useStateIfMounted(false);
 
   useEffect(() => {
     setLoading(true);

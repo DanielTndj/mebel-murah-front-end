@@ -3,10 +3,11 @@ import { Link } from "react-router-dom";
 import { getCategories } from "../../functions/category";
 import { Empty, Button } from "antd";
 import Spinner from "../spinner/Spinner";
+import { useStateIfMounted } from "use-state-if-mounted";
 
 const CategoryList = ({ title }) => {
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useStateIfMounted([]);
+  const [loading, setLoading] = useStateIfMounted(false);
 
   useEffect(() => {
     setLoading(true);

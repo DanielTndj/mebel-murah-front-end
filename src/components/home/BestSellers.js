@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { getProducts, getProductsCount } from "../../functions/product";
 import ProductCard from "../cards/ProductCard";
 import { Pagination } from "antd";
+import { useStateIfMounted } from "use-state-if-mounted";
 
 const BestSellers = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
-  const [productsCount, setProductsCount] = useState(0);
+  const [products, setProducts] = useStateIfMounted([]);
+  const [loading, setLoading] = useStateIfMounted(false);
+  const [page, setPage] = useStateIfMounted(1);
+  const [productsCount, setProductsCount] = useStateIfMounted(0);
 
   useEffect(() => {
     loadProducts();
