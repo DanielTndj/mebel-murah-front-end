@@ -101,7 +101,7 @@ const ProductCreateForm = ({
         </select>
       </div>
       <div className="form-group">
-        <label>Fabric</label>
+        <label>Material</label>
         <select name="fabric" className="custom-select" onChange={handleChange}>
           <option value="default">Select a fabric</option>
           {fabrics &&

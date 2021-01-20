@@ -7,7 +7,7 @@ import { getCategories } from "../functions/category";
 import { getSubsCategory } from "../functions/sub-category";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
-import { Menu, Slider, Empty, Checkbox, Button } from "antd";
+import { Menu, Slider, Empty, Checkbox, Button, Radio } from "antd";
 import Star from "../components/forms/Star";
 
 const { SubMenu, ItemGroup } = Menu;
@@ -24,6 +24,24 @@ const Shop = () => {
   const [star, setStar] = useState("");
   const [subs, setSubs] = useState([]);
   const [sub, setSub] = useState("");
+  const [fabrics, setFabrics] = useState([
+    "Woven",
+    "Polyester",
+    "CottonPolyester",
+    "Oscar",
+  ]);
+  const [fabric, setFabric] = useState("");
+  const [colors, setColors] = useState([
+    "Black",
+    "White",
+    "Grey",
+    "Brown",
+    "Red",
+    "Green",
+    "Blue",
+  ]);
+  const [color, setColor] = useState("");
+  const [shipping, setShipping] = useState("");
   const [isActiveBtn, setIsActiveBtn] = useState(false);
 
   let { search } = useSelector((state) => ({ ...state }));
@@ -77,6 +95,9 @@ const Shop = () => {
     setStar("");
     setIsActiveBtn(false);
     setSub("");
+    setFabric("");
+    setColor("");
+    setShipping("");
 
     setPrice(value);
     setTimeout(() => {
@@ -112,6 +133,9 @@ const Shop = () => {
     setStar("");
     setIsActiveBtn(false);
     setSub("");
+    setFabric("");
+    setColor("");
+    setShipping("");
 
     let inTheState = [...categoryIds];
     let justChecked = event.target.value;
@@ -143,6 +167,9 @@ const Shop = () => {
     setCategoryIds([]);
     setIsActiveBtn(false);
     setSub("");
+    setFabric("");
+    setColor("");
+    setShipping("");
 
     setStar(num);
     fetchProducts({ stars: num });
@@ -184,10 +211,116 @@ const Shop = () => {
     setPrice([0, 0]);
     setCategoryIds([]);
     setStar("");
+    setFabric("");
+    setColor("");
+    setShipping("");
 
     setIsActiveBtn(!isActiveBtn);
     setSub(sub);
     fetchProducts({ sub });
+  };
+
+  //load products based on material
+  const showMaterials = () =>
+    fabrics.map((f, index) => (
+      <Radio
+        key={index}
+        value={f}
+        name={f}
+        checked={f === fabric}
+        onChange={handleFabric}
+        className="mb-1"
+      >
+        {f}
+      </Radio>
+    ));
+
+  const handleFabric = (event) => {
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setIsActiveBtn(false);
+    setSub("");
+    setColor("");
+    setShipping("");
+
+    setFabric(event.target.value);
+    fetchProducts({ fabric: event.target.value });
+  };
+
+  //load products based on color
+  const showColors = () =>
+    colors.map((c, index) => (
+      <Radio
+        key={index}
+        value={c}
+        name={c}
+        checked={c === color}
+        onChange={handleColor}
+        className="mb-1"
+      >
+        {c}
+      </Radio>
+    ));
+
+  const handleColor = (event) => {
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setIsActiveBtn(false);
+    setSub("");
+    setFabric("");
+    setShipping("");
+
+    setColor(event.target.value);
+    fetchProducts({ color: event.target.value });
+  };
+
+  //load products based on shipping
+  const showShipping = () => (
+    <>
+      <Checkbox
+        className="mb-1"
+        onChange={handleShipping}
+        value="Yes"
+        checked={shipping === "Yes"}
+      >
+        Yes
+      </Checkbox>
+      <Checkbox
+        className="mb-1"
+        onChange={handleShipping}
+        value="No"
+        checked={shipping === "No"}
+      >
+        No
+      </Checkbox>
+    </>
+  );
+
+  const handleShipping = (event) => {
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+    setIsActiveBtn(false);
+    setSub("");
+    setFabric("");
+    setColor("");
+
+    setShipping(event.target.value);
+    fetchProducts({ shipping: event.target.value });
   };
 
   return (
@@ -225,6 +358,21 @@ const Shop = () => {
             {/* sub categories */}
             <SubMenu title={<span className="h6">Sub Categories</span>}>
               <div className="ml-4 mt-2">{showSubs()}</div>
+            </SubMenu>
+
+            {/* fabric */}
+            <SubMenu title={<span className="h6">Materials</span>}>
+              <div className="ml-4">{showMaterials()}</div>
+            </SubMenu>
+
+            {/* color */}
+            <SubMenu title={<span className="h6">Colors</span>}>
+              <div className="ml-4">{showColors()}</div>
+            </SubMenu>
+
+            {/* Shipping */}
+            <SubMenu title={<span className="h6">Shipping</span>}>
+              <div className="ml-4">{showShipping()}</div>
             </SubMenu>
           </Menu>
         </div>

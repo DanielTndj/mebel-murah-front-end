@@ -52,6 +52,12 @@ const ProductListItems = ({ product }) => {
       )}
 
       <li className="list-group-item">
+        Materia;
+        <span className="label label-default label-pill pull-xs-right">
+          {fabric}
+        </span>
+      </li>
+      <li className="list-group-item">
         Shipping
         <span className="label label-default label-pill pull-xs-right">
           {shipping}

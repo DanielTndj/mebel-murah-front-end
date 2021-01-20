@@ -107,7 +107,7 @@ const ProductUpdateForm = ({
         </select>
       </div>
       <div className="form-group">
-        <label>Fabric</label>
+        <label>Material</label>
         <select
           name="fabric"
           className="custom-select"
