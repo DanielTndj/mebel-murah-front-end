@@ -4,9 +4,10 @@ import {
   fetchProductsByFilter,
 } from "../functions/product";
 import { getCategories } from "../functions/category";
+import { getSubsCategory } from "../functions/sub-category";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
-import { Menu, Slider, Empty, Checkbox } from "antd";
+import { Menu, Slider, Empty, Checkbox, Button } from "antd";
 import Star from "../components/forms/Star";
 
 const { SubMenu, ItemGroup } = Menu;
@@ -21,6 +22,9 @@ const Shop = () => {
   // send categories selected to backend
   const [categoryIds, setCategoryIds] = useState([]);
   const [star, setStar] = useState("");
+  const [subs, setSubs] = useState([]);
+  const [sub, setSub] = useState("");
+  const [isActiveBtn, setIsActiveBtn] = useState(false);
 
   let { search } = useSelector((state) => ({ ...state }));
   const { text } = search;
@@ -30,6 +34,8 @@ const Shop = () => {
     loadAllProducts();
     //fetch categories
     getCategories().then((res) => setCategories(res.data));
+    //fetch subs category
+    getSubsCategory().then((res) => setSubs(res.data));
   }, []);
 
   const fetchProducts = (arg) => {
@@ -68,8 +74,11 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-    setPrice(value);
     setStar("");
+    setIsActiveBtn(false);
+    setSub("");
+
+    setPrice(value);
     setTimeout(() => {
       setOk(!ok);
     }, 300);
@@ -101,7 +110,9 @@ const Shop = () => {
     });
     setPrice([0, 0]);
     setStar("");
-    // console.log(event.target.value)
+    setIsActiveBtn(false);
+    setSub("");
+
     let inTheState = [...categoryIds];
     let justChecked = event.target.value;
     let foundInTheState = inTheState.indexOf(justChecked); //return true/-1
@@ -130,6 +141,9 @@ const Shop = () => {
     });
     setPrice([0, 0]);
     setCategoryIds([]);
+    setIsActiveBtn(false);
+    setSub("");
+
     setStar(num);
     fetchProducts({ stars: num });
   };
@@ -143,6 +157,38 @@ const Shop = () => {
       <Star starClick={handleStarClick} numberOfStars={1} />
     </div>
   );
+
+  //load products based on subs categories
+  const showSubs = () =>
+    subs.map((sub) => (
+      <Button
+        onClick={() => handleSub(sub)}
+        key={sub._id}
+        type="primary"
+        size="small"
+        shape="round"
+        style={{ textTransform: "initial" }}
+        className={`btn btn-outline-dark m-0 mr-1 mb-2 ${
+          isActiveBtn && "btn-raised"
+        }`}
+      >
+        {sub.name}
+      </Button>
+    ));
+
+  const handleSub = (sub) => {
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar("");
+
+    setIsActiveBtn(!isActiveBtn);
+    setSub(sub);
+    fetchProducts({ sub });
+  };
 
   return (
     <div className="container-fluid pt-5">
@@ -174,6 +220,11 @@ const Shop = () => {
             {/* stars */}
             <SubMenu title={<span className="h6">Rating</span>}>
               <div>{showStars()}</div>
+            </SubMenu>
+
+            {/* sub categories */}
+            <SubMenu title={<span className="h6">Sub Categories</span>}>
+              <div className="ml-4 mt-2">{showSubs()}</div>
             </SubMenu>
           </Menu>
         </div>
