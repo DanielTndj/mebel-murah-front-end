@@ -12,6 +12,7 @@
     "dotenv": "^8.2.0",
     "firebase": "^8.2.2",
     "glamor": "^2.20.40",
+    "lodash": "^4.17.20",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-image-file-resizer": "^0.4.0",

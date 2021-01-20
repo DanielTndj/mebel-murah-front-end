@@ -1,5 +1,5 @@
-import React from "react";
-import { Card, Image, Tabs } from "antd";
+import React, { useState } from "react";
+import { Card, Image, Tabs, Tooltip } from "antd";
 import { Link } from "react-router-dom";
 import { HeartOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -9,6 +9,8 @@ import { style } from "glamor";
 import StarRating from "react-star-ratings";
 import RatingModal from "../modal/RatingModal";
 import { showAverage } from "../../functions/rating";
+import { useSelector, useDispatch } from "react-redux";
+import _ from "lodash";
 
 const { TabPane } = Tabs;
 const fallback =
@@ -16,6 +18,7 @@ const fallback =
 
 // Children component of product page
 const SingleProduct = ({ product, onStarClick, star }) => {
+  const [tooltip, setTooltip] = useState("Click to add");
   const { title, images, description, _id } = product;
   const textCustom = {
     changeText: style({
@@ -23,6 +26,36 @@ const SingleProduct = ({ product, onStarClick, star }) => {
       letterSpacing: "5.25%",
       fontWeight: "lighter",
     }),
+  };
+  const { user, cart } = useSelector((state) => ({ ...state }));
+  const dispatch = useDispatch();
+
+  // save product to local storage (checkout)
+  const handleAddToCart = () => {
+    let cart = [];
+
+    if (typeof window !== "undefined") {
+      //get cart if already in local storage
+      if (localStorage.getItem("cart")) {
+        cart = JSON.parse(localStorage.getItem("cart"));
+      }
+
+      //push new product to cart
+      cart.push({
+        ...product,
+        count: 1,
+      });
+      // remove duplicate product
+      let unique = _.uniqWith(cart, _.isEqual);
+      // save to local storage
+      localStorage.setItem("cart", JSON.stringify(unique));
+      setTooltip("Added");
+
+      dispatch({
+        type: "ADD_TO_CART",
+        payload: unique,
+      });
+    }
   };
 
   return (
@@ -71,15 +104,20 @@ const SingleProduct = ({ product, onStarClick, star }) => {
             {showAverage(product)}
           </div>
         ) : (
-          <p className="font-weight-light" style={{marginLeft: '43px'}}>No rating yet</p>
+          <p className="font-weight-light" style={{ marginLeft: "43px" }}>
+            No rating yet
+          </p>
         )}
         <Card
           bordered={false}
           actions={[
-            <>
-              <ShoppingCartOutlined className="text-info" />
-              Add to Cart
-            </>,
+            <Tooltip title={tooltip}>
+              <a onClick={handleAddToCart}>
+                <ShoppingCartOutlined className="text-info" />
+                <br />
+                Add to Cart
+              </a>
+            </Tooltip>,
             <Link to="">
               <HeartOutlined className="text-info" />
               <br /> Add to Wishlist

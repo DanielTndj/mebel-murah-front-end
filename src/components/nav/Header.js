@@ -19,7 +19,7 @@ const Header = () => {
   const [current, setCurrent] = useState("home");
   const [visible, setVisible] = useState(false);
   let dispatch = useDispatch();
-  let { user } = useSelector((state) => ({ ...state }));
+  let { user,cart } = useSelector((state) => ({ ...state }));
   let history = useHistory();
 
   const showDrawer = () => {
@@ -55,7 +55,7 @@ const Header = () => {
       </div>
       <div className="menuCon">
         <div className="leftMenu">
-          <LeftMenu handleClick={handleClick} current={current} />
+          <LeftMenu handleClick={handleClick} current={current} cart={cart} />
         </div>
         <div className="rightMenu">
           <RightMenu
@@ -79,7 +79,7 @@ const Header = () => {
           onClose={onClose}
           visible={visible}
         >
-          <LeftMenu handleClick={handleClick} current={current} />
+          <LeftMenu handleClick={handleClick} current={current} cart={cart} />
           <RightMenu
             user={user}
             logout={logout}

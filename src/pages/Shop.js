@@ -9,6 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
 import { Menu, Slider, Empty, Checkbox, Button, Radio } from "antd";
 import Star from "../components/forms/Star";
+import Spinner from "../components/spinner/Spinner";
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -43,6 +44,7 @@ const Shop = () => {
   const [color, setColor] = useState("");
   const [shipping, setShipping] = useState("");
   const [isActiveBtn, setIsActiveBtn] = useState(false);
+  const [load, setLoad] = useState(false);
 
   let { search } = useSelector((state) => ({ ...state }));
   const { text } = search;
@@ -57,17 +59,19 @@ const Shop = () => {
   }, []);
 
   const fetchProducts = (arg) => {
+    setLoad(true);
     fetchProductsByFilter(arg).then((res) => {
+      setLoad(false);
       setProducts(res.data);
     });
   };
 
   //load products on page shop load
   const loadAllProducts = () => {
-    // setLoading(true);
+    setLoad(true);
     getProductsByCount(12).then((res) => {
+      setLoad(false);
       setProducts(res.data);
-      setLoading(false);
     });
   };
 
@@ -378,19 +382,23 @@ const Shop = () => {
         </div>
         <div className="col-md-9">
           <h3 className="pb-2 mt-4">Products</h3>
-
-          {products.length < 1 ? (
+          {!load && products.length < 1 && (
             <Empty
               imageStyle={{
                 height: 120,
               }}
               description={<span>No product found</span>}
             ></Empty>
+          )}
+
+          {/* {JSON.stringify(products)} */}
+          {load ? (
+            <Spinner />
           ) : (
             <div className="row">
               {products.map((product) => (
                 <div key={product._id} className="col-md-4">
-                  <ProductCard loading={loading} product={product} />
+                  <ProductCard loading={false} product={product} />
                 </div>
               ))}
             </div>

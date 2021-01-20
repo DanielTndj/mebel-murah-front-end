@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Grid } from "antd";
+import { Menu, Grid, Badge } from "antd";
 // import {
 //   BuildOutlined,
 //   HomeOutlined,
@@ -13,8 +13,9 @@ import { Link } from "react-router-dom";
 const { SubMenu, Item } = Menu;
 const { useBreakpoint } = Grid;
 
-const LeftMenu = ({ handleClick, current }) => {
+const LeftMenu = ({ handleClick, current, cart }) => {
   const { md } = useBreakpoint();
+
   return (
     <Menu
       mode={md ? "horizontal" : "inline"}
@@ -27,6 +28,11 @@ const LeftMenu = ({ handleClick, current }) => {
       </Item>
       <Item key="shop">
         <Link to="/shop">Shop</Link>
+      </Item>
+      <Item key="cart">
+        <Badge count={cart.length} offset={[13,8]}>
+          <Link to="/cart">Cart</Link>
+        </Badge>
       </Item>
       {/* <SubMenu key="sub1" title={<span>Shop</span>}>
         <MenuItemGroup title="Item 1">

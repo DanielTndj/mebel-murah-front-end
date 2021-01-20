@@ -100,7 +100,7 @@ const ProductUpdateForm = ({
         >
           {colors &&
             colors.map((color) => (
-              <option key={color} value={color}>
+              <option key={color} value={color}> 
                 {color}
               </option>
             ))}
