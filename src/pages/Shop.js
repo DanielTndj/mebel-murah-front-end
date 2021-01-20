@@ -7,6 +7,7 @@ import { getCategories } from "../functions/category";
 import { useSelector, useDispatch } from "react-redux";
 import ProductCard from "../components/cards/ProductCard";
 import { Menu, Slider, Empty, Checkbox } from "antd";
+import Star from "../components/forms/Star";
 
 const { SubMenu, ItemGroup } = Menu;
 
@@ -19,6 +20,7 @@ const Shop = () => {
   const [categories, setCategories] = useState([]);
   // send categories selected to backend
   const [categoryIds, setCategoryIds] = useState([]);
+  const [star, setStar] = useState("");
 
   let { search } = useSelector((state) => ({ ...state }));
   const { text } = search;
@@ -66,8 +68,8 @@ const Shop = () => {
       type: "SEARCH_QUERY",
       payload: { text: "" },
     });
-
     setPrice(value);
+    setStar("");
     setTimeout(() => {
       setOk(!ok);
     }, 300);
@@ -98,6 +100,7 @@ const Shop = () => {
       payload: { text: "" },
     });
     setPrice([0, 0]);
+    setStar("");
     // console.log(event.target.value)
     let inTheState = [...categoryIds];
     let justChecked = event.target.value;
@@ -116,6 +119,30 @@ const Shop = () => {
     // console.log(inTheState);
     fetchProducts({ category: inTheState });
   };
+
+  // load products based on average of star
+  const handleStarClick = (num) => {
+    // console.log("STARS", num);
+    //reset value on state
+    dispatch({
+      type: "SEARCH_QUERY",
+      payload: { text: "" },
+    });
+    setPrice([0, 0]);
+    setCategoryIds([]);
+    setStar(num);
+    fetchProducts({ stars: num });
+  };
+
+  const showStars = () => (
+    <div className="pr-4 pl-4 pb-2">
+      <Star starClick={handleStarClick} numberOfStars={5} />
+      <Star starClick={handleStarClick} numberOfStars={4} />
+      <Star starClick={handleStarClick} numberOfStars={3} />
+      <Star starClick={handleStarClick} numberOfStars={2} />
+      <Star starClick={handleStarClick} numberOfStars={1} />
+    </div>
+  );
 
   return (
     <div className="container-fluid pt-5">
@@ -142,6 +169,11 @@ const Shop = () => {
             {/* categories */}
             <SubMenu title={<span className="h6">Categories</span>}>
               <div>{showCategories()}</div>
+            </SubMenu>
+
+            {/* stars */}
+            <SubMenu title={<span className="h6">Rating</span>}>
+              <div>{showStars()}</div>
             </SubMenu>
           </Menu>
         </div>
