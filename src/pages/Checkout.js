@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Button, Popconfirm } from "antd";
+import { Button, Popconfirm, Input } from "antd";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserCart, emptyUserCart } from "../functions/user";
+import { getUserCart, emptyUserCart, saveUserAddress } from "../functions/user";
 import { toast } from "react-toastify";
+
+const { TextArea } = Input;
 
 const Checkout = () => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
+  const [address, setAddress] = useState("");
+  const [addressSaved, setAddressSaved] = useState(false);
   const dispatch = useDispatch();
   const { user } = useSelector((state) => ({ ...state }));
 
@@ -18,7 +22,14 @@ const Checkout = () => {
     });
   }, []);
 
-  const saveAddressToDb = () => {};
+  const saveAddressToDb = () => {
+    saveUserAddress(user.token, address).then((res) => {
+      if (res.data.ok) {
+        setAddressSaved(true);
+        toast.success("Address saved");
+      }
+    });
+  };
 
   //empty from local storage, redux, db
   const emptyCart = () => {
@@ -38,11 +49,24 @@ const Checkout = () => {
     });
   };
 
+  const handleAddressChange = (event) => {
+    setAddress(event.target.value);
+    console.log("ADDRESS", address);
+  };
+
   return (
-    <div class="container-fluid">
+    <div className="container-fluid">
       <div className="row p-5">
         <div className="col-md-8">
           <h3>Delivery Address</h3>
+          <div className="mt-2">
+            <TextArea
+              showCount
+              maxLength={100}
+              value={address}
+              onChange={handleAddressChange}
+            />
+          </div>
           <Button
             onClick={saveAddressToDb}
             type="primary"
@@ -76,6 +100,7 @@ const Checkout = () => {
                 type="primary"
                 size="middle"
                 className="btn btn-warning btn-raised btn-block"
+                disabled={!addressSaved || !products.length}
               >
                 Place Order
               </Button>
