@@ -3,8 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Empty, Button } from "antd";
 import ProductCardInCheckout from "../components/cards/ProductCardInCheckout";
+import { userCart } from "../functions/user";
 
-const Cart = () => {
+const Cart = ({ history }) => {
   const { cart, user } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
 
@@ -36,7 +37,14 @@ const Cart = () => {
     }, 0);
   };
 
-  const saveOrderToDb = () => {};
+  const saveOrderToDb = () => {
+    userCart(cart, user.token)
+      .then((res) => {
+        console.log(res);
+        if (res.data.ok) history.push("/checkout");
+      })
+      .catch((err) => console.log("cart save err", err));
+  };
 
   return (
     <div className="container-fluid">
@@ -58,7 +66,7 @@ const Cart = () => {
             showCartItems()
           )}
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-4 pt-5">
           <h5>Order Summary</h5>
           <hr />
           <p style={{ fontSize: "1rem" }}>Products</p>
