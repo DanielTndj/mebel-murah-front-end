@@ -30,7 +30,7 @@ const LeftMenu = ({ handleClick, current, cart }) => {
         <Link to="/shop">Shop</Link>
       </Item>
       <Item key="cart">
-        <Badge count={cart.length} offset={[13,8]}>
+        <Badge count={cart.length} offset={[13, 8]}>
           <Link to="/cart">Cart</Link>
         </Badge>
       </Item>

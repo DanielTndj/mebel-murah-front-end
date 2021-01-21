@@ -49,32 +49,6 @@ const Shop = () => {
   let { search } = useSelector((state) => ({ ...state }));
   const { text } = search;
   const dispatch = useDispatch();
-
-  useEffect(() => {
-    loadAllProducts();
-    //fetch categories
-    getCategories().then((res) => setCategories(res.data));
-    //fetch subs category
-    getSubsCategory().then((res) => setSubs(res.data));
-  }, []);
-
-  const fetchProducts = (arg) => {
-    setLoad(true);
-    fetchProductsByFilter(arg).then((res) => {
-      setLoad(false);
-      setProducts(res.data);
-    });
-  };
-
-  //load products on page shop load
-  const loadAllProducts = () => {
-    setLoad(true);
-    getProductsByCount(12).then((res) => {
-      setLoad(false);
-      setProducts(res.data);
-    });
-  };
-
   //load products on user input (on search)
   useEffect(() => {
     const delayed = setTimeout(() => {
@@ -88,6 +62,53 @@ const Shop = () => {
   useEffect(() => {
     fetchProducts({ price });
   }, [ok]);
+
+  useEffect(() => {
+    loadAllProducts();
+
+    getCategories().then((res) => setCategories(res.data));
+    //fetch subs category
+    getSubsCategory().then((res) => setSubs(res.data));
+  }, []);
+
+  // useEffect(() => {
+  //   if (products.length) {
+  //     getCategories().then((res) => setCategories(res.data));
+  //     //fetch subs category
+  //     getSubsCategory().then((res) => setSubs(res.data));
+  //   }
+  // }, [products]);
+
+  const fetchProducts = (arg) => {
+    setLoad(true);
+    fetchProductsByFilter(arg).then((res) => {
+      setLoad(false);
+      setProducts(res.data);
+    });
+  };
+
+  //load products on page shop load
+  const loadAllProducts = async () => {
+    setLoad(true);
+    getProductsByCount(12)
+      .then((res) => {
+        setLoad(false);
+        setProducts(res.data);
+      })
+      .catch((err) => {
+        setLoad(false);
+        console.log(err.message);
+      });
+
+    // try {
+    //   setLoad(true);
+    //   const { data } = await getProductsByCount(12);
+    //   setLoad(false);
+    //   setProducts(data);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+  };
 
   const handleSlider = (value) => {
     //update redux text state to '' (reset search input) & reset checkbox
@@ -382,7 +403,9 @@ const Shop = () => {
         </div>
         <div className="col-md-9">
           <h3 className="pb-2 mt-4">Products</h3>
-          {!load && products.length < 1 && (
+          {/* {!products && null} */}
+
+          {products.length < 1 && (
             <Empty
               imageStyle={{
                 height: 120,
@@ -392,9 +415,9 @@ const Shop = () => {
           )}
 
           {/* {JSON.stringify(products)} */}
-          {load ? (
+          {/* {load ? (
             <Spinner />
-          ) : (
+          ) : ( */}
             <div className="row">
               {products.map((product) => (
                 <div key={product._id} className="col-md-4">
@@ -402,7 +425,7 @@ const Shop = () => {
                 </div>
               ))}
             </div>
-          )}
+          {/* )} */}
         </div>
       </div>
     </div>
