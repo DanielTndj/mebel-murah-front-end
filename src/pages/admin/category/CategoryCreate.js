@@ -122,9 +122,9 @@ const CategoryCreate = () => {
                       >
                         <Tooltip
                           title="Delete category"
-                          placement="bottomRight"
+                          placement="top"
                         >
-                          <DeleteOutlined className="text-danger" />
+                          <DeleteOutlined className="text-danger pointer" />
                         </Tooltip>
                       </Popconfirm>,
                     ]}
