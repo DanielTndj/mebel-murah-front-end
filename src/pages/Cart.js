@@ -46,6 +46,20 @@ const Cart = ({ history }) => {
       .catch((err) => console.log("cart save err", err));
   };
 
+  const saveCashOrderToDb = () => {
+    dispatch({
+      type: "COD",
+      payload: true,
+    });
+
+    userCart(cart, user.token)
+      .then((res) => {
+        console.log(res);
+        if (res.data.ok) history.push("/checkout");
+      })
+      .catch((err) => console.log("cart save err", err));
+  };
+
   return (
     <div className="container-fluid">
       <div className="row p-5">
@@ -83,13 +97,23 @@ const Cart = ({ history }) => {
           </p>
           <hr />
           {user ? (
-            <Button
-              onClick={saveOrderToDb}
-              className="my-2 btn btn-outline-dark btn-raised"
-              disabled={!cart.length}
-            >
-              Checkout
-            </Button>
+            <>
+              <Button
+                onClick={saveOrderToDb}
+                className="my-2 btn btn-warning btn-raised btn-block"
+                disabled={!cart.length}
+              >
+                Checkout
+              </Button>
+              <br />
+              <Button
+                onClick={saveCashOrderToDb}
+                className="mt-2 btn btn-outline-dark btn-raised btn-block"
+                disabled={!cart.length}
+              >
+                Pay Cash on Delivery
+              </Button>
+            </>
           ) : (
             <Link
               to={{

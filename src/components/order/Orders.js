@@ -80,6 +80,7 @@ const Orders = ({ orders, handleStatusChange }) => {
                 onChange={(value) => handleStatusChange(order._id, value)}
               >
                 <Option value="Not Processed">Not Processed</Option>
+                <Option value="Cash On Delivery">Cash On Delivery</Option>
                 <Option value="Processing">Processing</Option>
                 <Option value="Dispatched">Dispatched</Option>
                 <Option value="Cancelled">Cancelled</Option>
@@ -87,7 +88,7 @@ const Orders = ({ orders, handleStatusChange }) => {
               </Select>
             </div>
           </div>
-          <hr/>
+          <hr />
         </div>
       ))}
     </>

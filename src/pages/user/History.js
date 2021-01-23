@@ -78,7 +78,7 @@ const History = () => {
   };
 
   const showOrders = () =>
-    orders.map((order, idx) => (
+    orders.reverse().map((order, idx) => (
       <div key={idx} className="p-3">
         <h6 style={{ fontSize: "18px" }}>Detail Order</h6>
         <ShowPaymentInfo order={order} />

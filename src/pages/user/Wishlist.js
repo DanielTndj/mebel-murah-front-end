@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { Card, Image, Popconfirm, Modal, Empty, Button } from "antd";
 import { EditOutlined, EyeTwoTone, DeleteOutlined } from "@ant-design/icons";
-import { toast } from "react-toastify";
+import {toast} from 'react-toastify'
 
 const { Meta } = Card;
 const fallback =
@@ -26,9 +26,8 @@ const Wishlist = () => {
 
   const handleRemove = (productId) =>
     removeWishlist(productId, user.token).then((res) => {
-      toast.success("Successfully removed from your wishlist");
-      loadWishlist();
-    });
+      toast.success('Successfully removed from your wishlist')
+      loadWishlist()});
 
   return (
     <div className="row">
@@ -36,22 +35,20 @@ const Wishlist = () => {
       <div className="m-5 col">
         <h3>Wishlist</h3>
         <hr className="p-2" />
-        {!wishlist.length ? (
-          <div className="row d-flex justify-content-center">
+        <div className="row">
+          {!wishlist.length ? (
             <Empty
               imageStyle={{
                 height: 120,
               }}
-              description={<span>Your wishlist is empty.</span>}
+              description={<span>Your wish list is empty.</span>}
             >
               <Link to="/shop">
                 <Button type="primary">Go to Shop</Button>
               </Link>
             </Empty>
-          </div>
-        ) : (
-          wishlist.map((product) => (
-            <div className="row">
+          ) : (
+            wishlist.map((product) => (
               <div key={product._id} className="col-md-4">
                 <Card
                   cover={
@@ -103,9 +100,9 @@ const Wishlist = () => {
                   />
                 </Card>
               </div>
-            </div>
-          ))
-        )}
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

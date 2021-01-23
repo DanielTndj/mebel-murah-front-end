@@ -6,12 +6,13 @@ import {
   emptyUserCart,
   saveUserAddress,
   applyCoupon,
+  createCashOrderUser,
 } from "../functions/user";
 import { toast } from "react-toastify";
 
 const { TextArea } = Input;
 
-const Checkout = ({history}) => {
+const Checkout = ({ history }) => {
   const [products, setProducts] = useState([]);
   const [total, setTotal] = useState(0);
   const [address, setAddress] = useState("");
@@ -20,7 +21,8 @@ const Checkout = ({history}) => {
   const [totalAfterDiscount, setTotalAfterDiscount] = useState(0);
   const [discountError, setDiscountError] = useState("");
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => ({ ...state }));
+  const { user, cod } = useSelector((state) => ({ ...state }));
+  const couponTrueOrFalse = useSelector((state) => state.coupon);
 
   useEffect(() => {
     getUserCart(user.token).then((res) => {
@@ -83,6 +85,38 @@ const Checkout = ({history}) => {
           type: "COUPON_APPLIED",
           payload: false,
         });
+      }
+    });
+  };
+
+  const createCashOrder = () => {
+    createCashOrderUser(user.token, cod, couponTrueOrFalse).then((res) => {
+      console.log("COD RES", res.data);
+      
+      //empty cart - coupon - cod redux, local storage, remove cart from db
+      if (res.data.ok) {
+        if (typeof window !== "undefined") localStorage.removeItem("cart");
+
+        dispatch({
+          type: "ADD_TO_CART",
+          payload: [],
+        });
+
+        dispatch({
+          type: "COUPON_APPLIED",
+          payload: false,
+        });
+
+        dispatch({
+          type: "COD",
+          payload: false,
+        });
+
+        emptyUserCart(user.token);
+
+        setTimeout(() => {
+          history.push("/user/history");
+        }, 1000);
       }
     });
   };
@@ -150,7 +184,7 @@ const Checkout = ({history}) => {
           <h6>Cart Total: IDR {total}</h6>
 
           {totalAfterDiscount > 0 && (
-            <div className='py-2'>
+            <div className="py-2">
               <Alert
                 message={`Total Payment After Discount: IDR ${totalAfterDiscount}`}
                 type="success"
@@ -160,15 +194,27 @@ const Checkout = ({history}) => {
 
           <div className="row pt-3">
             <div className="col-md">
-              <Button
-                type="primary"
-                size="middle"
-                className="btn btn-warning btn-raised btn-block"
-                disabled={!addressSaved || !products.length}
-                onClick={() => history.push("/payment")}
-              >
-                Place Order
-              </Button>
+              {cod ? (
+                <Button
+                  type="primary"
+                  size="middle"
+                  className="btn btn-warning btn-raised btn-block"
+                  disabled={!addressSaved || !products.length}
+                  onClick={createCashOrder}
+                >
+                  Place Order (COD)
+                </Button>
+              ) : (
+                <Button
+                  type="primary"
+                  size="middle"
+                  className="btn btn-warning btn-raised btn-block"
+                  disabled={!addressSaved || !products.length}
+                  onClick={() => history.push("/payment")}
+                >
+                  Place Order (Card)
+                </Button>
+              )}
               <Popconfirm
                 disabled={!products.length}
                 title="Are you sure to delete this cart?"
