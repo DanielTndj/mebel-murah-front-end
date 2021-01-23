@@ -52,7 +52,7 @@ const ProductListItems = ({ product }) => {
       )}
 
       <li className="list-group-item">
-        Materia;
+        Material
         <span className="label label-default label-pill pull-xs-right">
           {fabric}
         </span>
