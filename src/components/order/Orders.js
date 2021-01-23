@@ -54,7 +54,6 @@ const Orders = ({ orders, handleStatusChange }) => {
       {orders.map((order) => (
         <div key={order._id} className="pb-3">
           <ShowPaymentInfo order={order} />
-
           <div>
             <br />
             <Collapse

@@ -95,6 +95,7 @@ const History = () => {
         <div className="row">
           <div className="col">{showDownloadLink(order)}</div>
         </div>
+        <hr />
       </div>
     ));
 
@@ -105,7 +106,6 @@ const History = () => {
         <h5>
           {orders.length > 0 ? "User Purchase Orders" : "No Purchase Orders"}
         </h5>
-        <hr className="p-2" />
         <div className="row">
           <div className="col-md-12">{showOrders()}</div>
         </div>

@@ -11,6 +11,9 @@ import RatingModal from "../modal/RatingModal";
 import { showAverage } from "../../functions/rating";
 import { useSelector, useDispatch } from "react-redux";
 import _ from "lodash";
+import { addToWishlist } from "../../functions/user";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const { TabPane } = Tabs;
 const fallback =
@@ -29,6 +32,7 @@ const SingleProduct = ({ product, onStarClick, star }) => {
   };
   const { user, cart } = useSelector((state) => ({ ...state }));
   const dispatch = useDispatch();
+  let history = useHistory();
 
   // save product to local storage (checkout)
   const handleAddToCart = () => {
@@ -62,6 +66,16 @@ const SingleProduct = ({ product, onStarClick, star }) => {
         payload: true,
       });
     }
+  };
+
+  const handleAddToWishlist = (e) => {
+    e.preventDefault();
+
+    addToWishlist(product._id, user.token).then((res) => {
+      console.log("ADDED TO WISHLIST", res.data);
+      toast.success("Added to wishlist");
+      history.push("/user/wishlist");
+    });
   };
 
   return (
@@ -124,10 +138,10 @@ const SingleProduct = ({ product, onStarClick, star }) => {
                 Add to Cart
               </a>
             </Tooltip>,
-            <Link to="">
+            <a onClick={handleAddToWishlist}>
               <HeartOutlined className="text-info" />
               <br /> Add to Wishlist
-            </Link>,
+            </a>,
             <RatingModal>
               <StarRating
                 name={_id}

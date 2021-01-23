@@ -3,7 +3,7 @@ import AdminNav from "../../components/nav/AdminNav";
 import { getOrders, changeStatus } from "../../functions/admin";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import Orders from '../../components/order/Orders'
+import Orders from "../../components/order/Orders";
 
 const AdminDashboard = () => {
   const [orders, setOrders] = useState([]);
@@ -29,7 +29,6 @@ const AdminDashboard = () => {
       <AdminNav selectedKeys="dashboard" />
       <div className="m-5 col">
         <h5>Admin Dashboard</h5>
-        <hr className="p-2" />
         <div className="row">
           <div className="col-md-12">
             <Orders orders={orders} handleStatusChange={handleStatusChange} />
