@@ -105,7 +105,7 @@ const History = () => {
         <h5>
           {orders.length > 0 ? "User Purchase Orders" : "No Purchase Orders"}
         </h5>
-        <hr />
+        <hr className="p-2" />
         <div className="row">
           <div className="col-md-12">{showOrders()}</div>
         </div>

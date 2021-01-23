@@ -6,8 +6,8 @@ const { Panel } = Collapse;
 const ShowPaymentInfo = ({ order }) => {
   return (
     <div>
-      <Collapse ghost>
-        <Panel header="Details Payment">
+      <Collapse ghost defaultActiveKey={['1']}>
+        <Panel header="Details Payment" key='1'>
           <div className="px-5">
             <p>ID payment: ${order.paymentIntent.id}</p>
             <p>
