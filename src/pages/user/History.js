@@ -6,6 +6,8 @@ import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import ShowPaymentInfo from "../../components/cards/ShowPaymentInfo";
 import { Collapse } from "antd";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import Invoice from "../../components/order/Invoice";
 
 const { Panel } = Collapse;
 
@@ -62,10 +64,23 @@ const History = () => {
     </div>
   );
 
+  const showDownloadLink = (order) => {
+    return (
+      <PDFDownloadLink
+        document={<Invoice order={order} />}
+        fileName="invoice.pdf"
+        style={{ position: "relative", top: "-13px" }}
+        className="ml-3 btn btn-outline-dark btn-raised"
+      >
+        Download PDF
+      </PDFDownloadLink>
+    );
+  };
+
   const showOrders = () =>
     orders.map((order, idx) => (
       <div key={idx} className="p-3">
-        <h5>Detail Order</h5>
+        <h6 style={{ fontSize: "18px" }}>Detail Order</h6>
         <ShowPaymentInfo order={order} />
         <br />
         <Collapse
@@ -78,9 +93,7 @@ const History = () => {
           </Panel>
         </Collapse>
         <div className="row">
-          <div className="col">
-            <p className='ml-3'>PDF download</p>
-          </div>
+          <div className="col">{showDownloadLink(order)}</div>
         </div>
       </div>
     ));
@@ -92,6 +105,7 @@ const History = () => {
         <h5>
           {orders.length > 0 ? "User Purchase Orders" : "No Purchase Orders"}
         </h5>
+        <hr />
         <div className="row">
           <div className="col-md-12">{showOrders()}</div>
         </div>

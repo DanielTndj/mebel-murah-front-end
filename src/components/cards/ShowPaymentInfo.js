@@ -27,7 +27,7 @@ const ShowPaymentInfo = ({ order }) => {
               Order Status:{" "}
               <span
                 className="badge bg-primary text-white"
-                style={{ fontSize: "13px", padding:'6px' }}
+                style={{ fontSize: "13px", padding: "6px" }}
               >
                 {order.orderStatus}
               </span>

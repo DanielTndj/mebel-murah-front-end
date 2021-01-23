@@ -4,10 +4,11 @@ import { Menu, Button } from "antd";
 import {
   AppstoreOutlined,
   InboxOutlined,
-  LockOutlined,
+  BlockOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   NumberOutlined,
+  BorderOutlined,
   UnorderedListOutlined,
   UserOutlined,
 } from "@ant-design/icons";
@@ -45,17 +46,14 @@ const AdminNav = ({ selectedKeys }) => {
         <Item key="products" icon={<AppstoreOutlined />}>
           <Link to="/admin/products">Products</Link>
         </Item>
-        <Item key="category" icon={<UnorderedListOutlined />}>
+        <Item key="category" icon={<BorderOutlined />}>
           <Link to="/admin/category">Category</Link>
         </Item>
-        <Item key="subcategory" icon={<UnorderedListOutlined />}>
+        <Item key="subcategory" icon={<BlockOutlined />}>
           <Link to="/admin/sub-category">Sub Category</Link>
         </Item>
         <Item key="coupon" icon={<NumberOutlined />}>
           <Link to="/admin/coupon">Coupon</Link>
-        </Item>
-        <Item key="password" icon={<LockOutlined />}>
-          <Link to="/user/password">Password</Link>
         </Item>
       </Menu>
     </div>
