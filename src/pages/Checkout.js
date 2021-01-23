@@ -150,7 +150,7 @@ const Checkout = ({history}) => {
           <h6>Cart Total: IDR {total}</h6>
 
           {totalAfterDiscount > 0 && (
-            <div>
+            <div className='py-2'>
               <Alert
                 message={`Total Payment After Discount: IDR ${totalAfterDiscount}`}
                 type="success"
