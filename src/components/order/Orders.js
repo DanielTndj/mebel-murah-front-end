@@ -77,7 +77,7 @@ const Orders = ({ orders, handleStatusChange }) => {
               <Select
                 defaultValue={order.orderStatus}
                 name="status"
-                onChange={(value) => handleStatusChange(order._id, value)}
+                onChange={(value) => handleStatusChange(order._id, value, order.orderedBy)}
               >
                 <Option value="Not Processed">Not Processed</Option>
                 <Option value="Cash On Delivery">Cash On Delivery</Option>
