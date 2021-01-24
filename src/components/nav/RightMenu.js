@@ -9,6 +9,7 @@ const { useBreakpoint } = Grid;
 
 const RightMenu = ({ user, logout, handleClick, current }) => {
   const { md } = useBreakpoint();
+
   return (
     <Menu
       className="row"
