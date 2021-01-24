@@ -14,12 +14,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import LeftMenu from "./LeftMenu";
 import RightMenu from "./RightMenu";
+import { emptyUserCart } from "../../functions/user";
 
 const Header = () => {
   const [current, setCurrent] = useState("home");
   const [visible, setVisible] = useState(false);
   let dispatch = useDispatch();
-  let { user,cart } = useSelector((state) => ({ ...state }));
+  let { user, cart } = useSelector((state) => ({ ...state }));
   let history = useHistory();
 
   const showDrawer = () => {
@@ -42,6 +43,25 @@ const Header = () => {
       type: "LOGOUT",
       payload: null,
     });
+
+    if (typeof window !== "undefined") localStorage.removeItem("cart");
+
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: [],
+    });
+
+    dispatch({
+      type: "COUPON_APPLIED",
+      payload: false,
+    });
+
+    dispatch({
+      type: "COD",
+      payload: false,
+    });
+
+    emptyUserCart(user.token);
 
     history.push("/login");
   };

@@ -35,7 +35,6 @@ const ShowPaymentInfo = ({ order }) => {
           </div>
         </Panel>
       </Collapse>
-      {/* <p>Order ID: {order.paymentIntent.id}</p> */}
     </div>
   );
 };

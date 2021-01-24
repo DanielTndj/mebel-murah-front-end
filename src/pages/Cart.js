@@ -109,7 +109,7 @@ const Cart = ({ history }) => {
               <Button
                 onClick={saveCashOrderToDb}
                 className="mt-2 btn btn-outline-dark btn-raised btn-block"
-                disabled={!cart.length}
+                disabled={!cart.length || cart[0].shipping === "No"}
               >
                 Pay Cash on Delivery
               </Button>
