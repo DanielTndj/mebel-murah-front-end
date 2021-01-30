@@ -75,7 +75,12 @@ const Header = () => {
       </div>
       <div className="menuCon">
         <div className="leftMenu">
-          <LeftMenu handleClick={handleClick} current={current} cart={cart} />
+          <LeftMenu
+            handleClick={handleClick}
+            current={current}
+            cart={cart}
+            user={user}
+          />
         </div>
         <div className="rightMenu">
           <RightMenu
@@ -99,7 +104,12 @@ const Header = () => {
           onClose={onClose}
           visible={visible}
         >
-          <LeftMenu handleClick={handleClick} current={current} cart={cart} />
+          <LeftMenu
+            handleClick={handleClick}
+            current={current}
+            cart={cart}
+            user={user}
+          />
           <RightMenu
             user={user}
             logout={logout}

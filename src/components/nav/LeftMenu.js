@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 const { SubMenu, Item } = Menu;
 const { useBreakpoint } = Grid;
 
-const LeftMenu = ({ handleClick, current, cart }) => {
+const LeftMenu = ({ handleClick, current, cart, user }) => {
   const { md } = useBreakpoint();
 
   return (
@@ -29,11 +29,15 @@ const LeftMenu = ({ handleClick, current, cart }) => {
       <Item key="shop">
         <Link to="/shop">Shop</Link>
       </Item>
-      <Item key="cart">
-        <Badge count={cart.length} offset={[13, 8]}>
-          <Link to="/cart">Cart</Link>
-        </Badge>
-      </Item>
+      {user && user.role === "customer" && (
+        <>
+          <Item key="cart">
+            <Badge count={cart.length} offset={[13, 8]}>
+              <Link to="/cart">Cart</Link>
+            </Badge>
+          </Item>
+        </>
+      )}
       {/* <SubMenu key="sub1" title={<span>Shop</span>}>
         <MenuItemGroup title="Item 1">
           <Menu.Item key="setting:1">Option 1</Menu.Item>
