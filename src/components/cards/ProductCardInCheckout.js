@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, Tooltip, Select, InputNumber, Popconfirm } from "antd";
+import { Image, Tooltip, Select, InputNumber, Popconfirm, Alert } from "antd";
 import { useDispatch } from "react-redux";
 import {
   CheckCircleOutlined,
@@ -71,7 +71,7 @@ const ProductCardInCheckout = ({ product }) => {
 
       cart.map((prod, index) => {
         if (prod._id === product._id) {
-          cart.splice(index, 1)
+          cart.splice(index, 1);
         }
       });
 
@@ -156,10 +156,13 @@ const ProductCardInCheckout = ({ product }) => {
               style={{ fontSize: "20px" }}
             />
           ) : (
-            <CloseCircleOutlined
-              className="text-danger"
-              style={{ fontSize: "20px" }}
-            />
+            <>
+              <Alert
+              style={{fontSize: '13px'}}
+                message="This product only available on offline store"
+                type="warning"
+              />
+            </>
           )}
         </td>
         <td className="text-center">

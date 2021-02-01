@@ -101,7 +101,7 @@ const Cart = ({ history }) => {
               <Button
                 onClick={saveOrderToDb}
                 className="my-2 btn btn-warning btn-raised btn-block"
-                disabled={!cart.length}
+                disabled={!cart.length || cart[0].shipping === "No"}
               >
                 Checkout
               </Button>
