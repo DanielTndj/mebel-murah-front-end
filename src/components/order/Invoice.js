@@ -48,8 +48,6 @@ const Invoice = ({ order }) => {
             </TableCell>
             <TableCell style={{ textAlign: "center" }}>Price</TableCell>
             <TableCell style={{ textAlign: "center" }}>Quantity</TableCell>
-            <TableCell style={{ textAlign: "center" }}>Material</TableCell>
-            <TableCell style={{ textAlign: "center" }}>Color</TableCell>
           </TableHeader>
         </Table>
         <Table data={order.products}>
@@ -65,14 +63,6 @@ const Invoice = ({ order }) => {
             <DataTableCell
               style={{ textAlign: "center" }}
               getContent={(content) => content.count}
-            />
-            <DataTableCell
-              style={{ textAlign: "center" }}
-              getContent={(content) => content.product.fabric}
-            />
-            <DataTableCell
-              style={{ textAlign: "center" }}
-              getContent={(content) => content.product.color}
             />
           </TableBody>
         </Table>
