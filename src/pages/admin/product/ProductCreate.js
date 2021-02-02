@@ -7,6 +7,7 @@ import ProductCreateForm from "../../../components/forms/ProductCreateForm";
 import { getCategories, getSubsCategory } from "../../../functions/category";
 import FileUpload from "../../../components/forms/FileUpload";
 import Spinner from "../../../components/spinner/Spinner";
+import {useHistory} from 'react-router-dom'
 
 const initialState = {
   title: "",
@@ -26,6 +27,7 @@ const initialState = {
 };
 
 const ProductCreate = () => {
+  const history = useHistory()
   const { user } = useSelector((state) => ({ ...state }));
   const [values, setValues] = useState(initialState);
   const [subOptions, setSubOptions] = useState([]);
@@ -62,9 +64,7 @@ const ProductCreate = () => {
           loading: false,
         });
         toast.success(`Product ${res.data.title} successfully created`);
-        setTimeout(() => {
-          window.location.reload();
-        }, 150);
+        history.push('/admin/products')
       })
       .catch((err) => {
         setValues({ ...values, loading: false });
